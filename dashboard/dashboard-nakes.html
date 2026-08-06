@@ -1,0 +1,164 @@
+<header class="topbar">
+
+    <div>
+
+        <h2>Dashboard Tenaga Kesehatan</h2>
+
+    </div>
+
+    <button id="btnLogout" class="logout-btn">
+
+        Logout
+
+    </button>
+
+</header>
+
+<body>
+
+<div class="container">
+
+<h1>Dashboard Bidan / Kader</h1>
+
+<hr>
+
+<div class="cards">
+
+    <div class="card total">
+
+        <h2>Total Ibu Hamil</h2>
+
+        <h1 id="totalIbu">0</h1>
+
+    </div>
+
+    <div class="card rendah">
+
+        <h2>Risiko Rendah</h2>
+
+        <h1 id="rendah">0</h1>
+
+    </div>
+
+    <div class="card sedang">
+
+        <h2>Risiko Sedang</h2>
+
+        <h1 id="sedang">0</h1>
+
+    </div>
+
+    <div class="card tinggi">
+
+        <h2>Risiko Tinggi</h2>
+
+        <h1 id="tinggi">0</h1>
+
+    </div>
+
+</div>
+
+<hr>
+
+<a href="../pages/kelola-akun.html" class="card">
+
+👨‍⚕️
+
+<h2>Kelola Akun</h2>
+
+</a>
+
+<hr>
+
+<h2>📊 Statistik Risiko Kehamilan</h2>
+
+<div style="width:320px;margin:auto">
+
+    <canvas id="grafikRisiko"></canvas>
+
+</div>
+
+<hr>
+
+<h2>🚨 Prioritas Kunjungan</h2>
+
+<div id="prioritasKunjungan">
+
+Belum ada data.
+
+</div>
+
+<hr>
+
+<h2>Daftar Ibu Hamil</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchNama"
+placeholder="🔍 Cari nama ibu hamil...">
+
+</div>
+
+<div class="filter-box">
+
+<select id="filterRisiko">
+
+<option>Semua Risiko</option>
+
+<option>🟢 Risiko Rendah</option>
+
+<option>🟡 Risiko Sedang</option>
+
+<option>🔴 Risiko Tinggi</option>
+
+</select>
+
+</div>
+
+<br><br>
+
+<br>
+
+<table id="tabelIbu" border="1" width="100%">
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Nama</th>
+
+<th>Usia Kehamilan</th>
+
+<th>Status Risiko</th>
+
+<th>Skrining Terakhir</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="module" src="../js/dashboard-nakes.js"></script>
+
+<script type="module"
+src="../js/logout.js"></script>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard-nakes.css">
+
+</body>

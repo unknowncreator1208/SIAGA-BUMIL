@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Kelola Akun</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👨‍⚕️ Kelola Akun</h1>
+
+<hr>
+
+<h3>Tambah Bidan / Kader</h3>
+
+<label>Nama</label>
+<input type="text" id="nama">
+
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Password</label>
+<input type="password" id="password">
+
+<label>Role</label>
+
+<select id="role">
+
+<option value="bidan">Bidan</option>
+
+<option value="kader">Kader</option>
+
+</select>
+
+<br><br>
+
+<button onclick="tambahPetugas()">
+
+Tambah Akun
+
+</button>
+
+<hr>
+
+<h2>Daftar Petugas</h2>
+
+<table
+id="tabelPetugas"
+border="1"
+width="100%">
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Nama</th>
+
+<th>Email</th>
+
+<th>Role</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<button
+onclick="window.history.back()">
+
+Kembali
+
+</button>
+
+</div>
+
+<script type="module"
+src="../js/kelola-akun.js"></script>
+
+</body>
+
+</html>

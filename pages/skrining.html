@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Skrining Risiko Kehamilan</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🩺 SIAGA BUMIL</h1>
+
+<h2>Skrining Risiko Kehamilan</h2>
+
+<form id="formBumil">
+
+<h3>Identitas Ibu</h3>
+
+<label>Nama Lengkap</label>
+<input type="text" id="nama" readonly>
+
+<label>Umur (Tahun)</label>
+<input type="number" id="umur" readonly>
+
+<label>Usia Kehamilan (Minggu)</label>
+<input type="number" id="usiaKehamilan" readonly>
+
+<label>No. HP</label>
+<input type="text" id="nomorHP" readonly>
+
+<label>Alamat</label>
+<textarea id="alamat" readonly></textarea>
+
+<h3>Data Pemeriksaan</h3>
+
+<label>Tekanan Darah Sistol (mmHg)</label>
+
+<input
+type="number"
+id="sistol"
+placeholder="Contoh 120">
+
+<label>Tekanan Darah Diastol (mmHg)</label>
+
+<input
+type="number"
+id="diastol"
+placeholder="Contoh 80">
+
+<label>Riwayat Hipertensi</label>
+
+<input type="radio" name="hipertensi" value="Ya"> Ya
+
+<input type="radio" name="hipertensi" value="Tidak"> Tidak
+
+<br><br>
+
+<label>Riwayat Diabetes</label>
+
+<input type="radio" name="diabetes" value="Ya"> Ya
+
+<input type="radio" name="diabetes" value="Tidak"> Tidak
+
+<br><br>
+
+<label>Perdarahan</label>
+
+<input type="radio" name="perdarahan" value="Ya"> Ya
+
+<input type="radio" name="perdarahan" value="Tidak"> Tidak
+
+<br><br>
+
+<h3>Tanda Bahaya [Centang Apabila Anda Mengalami Keluhan Tersebut]</h3>
+
+<label>
+
+<input
+type="checkbox"
+id="nyeriKepala">
+
+Nyeri kepala hebat
+
+</label>
+
+<br>
+
+<label>
+
+<input
+type="checkbox"
+id="pandanganKabur">
+
+Pandangan kabur
+
+</label>
+
+<br>
+
+<label>
+
+<input
+type="checkbox"
+id="kejang">
+
+Kejang
+
+</label>
+
+<br>
+
+<label>
+
+<input
+type="checkbox"
+id="gerakJanin">
+
+Gerakan janin berkurang
+
+</label>
+
+<br>
+
+<label>
+
+<input
+type="checkbox"
+id="sesak">
+
+Sesak napas
+
+</label>
+
+<br>
+
+<label>
+
+<input
+type="checkbox"
+id="demam">
+
+Demam tinggi
+
+</label>
+
+<br><br>
+
+<label>Jumlah Kehamilan</label>
+
+<input type="number" id="jumlahKehamilan">
+
+<br><br>
+
+
+<button type="button" onclick="ambilData()">
+
+Hitung Risiko
+
+</button>
+
+</form>
+
+<hr>
+
+<h2>Hasil Pemeriksaan</h2>
+
+<div id="hasil"></div>
+
+<div id="peringatan"></div>
+
+<br>
+
+<button
+type="button"
+onclick="window.location.href='../dashboard/dashboard.html'"
+class="btn-kembali">
+
+⬅ Kembali ke Dashboard
+
+</button>
+
+</div>
+
+<script src="../js/skrining.js"></script>
+
+<script type="module"
+src="../js/firebase.js"></script>
+
+<script type="module"
+src="../js/skrining-firebase.js"></script>
+
+</body>
+
+</html>
+

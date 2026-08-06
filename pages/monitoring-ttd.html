@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Monitoring Tablet Tambah Darah</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💊 Monitoring Tablet Tambah Darah</h1>
+
+<h3>Identitas Ibu</h3>
+
+<label>Nama</label>
+<input type="text" id="nama" readonly>
+
+<label>Usia Kehamilan (Minggu)</label>
+<input type="number" id="usiaKehamilan" readonly>
+
+<label>Nomor HP</label>
+<input type="text" id="nomorHP" readonly>
+
+<hr>
+
+<h3>Input Konsumsi Hari Ini</h3>
+
+<label>Tanggal</label>
+<input type="date" id="tanggal">
+
+<label>Status Konsumsi</label>
+
+<select id="status">
+
+<option value="">-- Pilih --</option>
+
+<option value="Sudah">✅ Sudah Minum</option>
+
+<option value="Belum">❌ Belum Minum</option>
+
+</select>
+
+<br><br>
+
+<button type="button" onclick="simpanTTD()">
+
+💾 Simpan
+
+</button>
+
+<hr>
+
+<h2>Progress Konsumsi</h2>
+
+<div class="progress">
+
+<div id="bar"></div>
+
+</div>
+
+<p id="persentase">0 / 180 Tablet (0%)</p>
+
+<hr>
+
+<h2>Riwayat Konsumsi</h2>
+
+<table id="tabelTTD" border="1" width="100%">
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Tanggal</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<button
+type="button"
+class="btn-kembali"
+onclick="window.location.href='../dashboard/dashboard.html'">
+
+⬅ Kembali ke Dashboard
+
+</button>
+
+</div>
+
+<script type="module"
+src="../js/firebase.js"></script>
+
+<script type="module"
+src="../js/monitoring-firebase.js"></script>
+
+</body>
+
+</html>
+

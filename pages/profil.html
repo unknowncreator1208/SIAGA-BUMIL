@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profil Saya</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👤 Profil Saya</h1>
+
+<form id="formProfil">
+
+<label>Nama Lengkap</label>
+
+<input type="text" id="nama">
+
+<label>Umur</label>
+
+<input type="number" id="umur">
+
+<label>NIK</label>
+
+<input type="text" id="nik">
+
+<label>Tanggal Lahir</label>
+
+<input type="date" id="tanggalLahir">
+
+<label>Usia Kehamilan (Minggu)</label>
+
+<input type="number" id="usiaKehamilan">
+
+<label>Golongan Darah</label>
+
+<select id="golonganDarah">
+
+<option value="O">O</option>
+<option value="A">A</option>
+<option value="B">B</option>
+<option value="AB">AB</option>
+
+</select>
+
+<label>Nomor HP</label>
+
+<input type="text" id="nomorHP">
+
+<label>Alamat</label>
+
+<textarea id="alamat"></textarea>
+
+<label>Perkiraan Hari Lahir (HPL)</label>
+
+<input type="date" id="hpl">
+
+<br><br>
+
+<button type="button" onclick="simpanProfil()">
+    💾 Simpan Profil
+
+</button>
+
+<br><br>
+
+<button type="button" onclick="window.location.href='../dashboard/dashboard.html'" class="btn-kembali">
+
+⬅ Kembali ke Dashboard
+
+</button>
+
+</form>
+
+</div>
+
+<script type="module" src="../js/firebase.js"></script>
+<script type="module" src="../js/profil-firebase.js"></script>
+
+</body>
+
+</html>
+
