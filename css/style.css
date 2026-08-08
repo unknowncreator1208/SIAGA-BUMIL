@@ -642,3 +642,35 @@ LOGOUT
     background:#C62828;
 
 }
+
+.section-title{
+
+    margin-top:30px;
+
+    margin-bottom:20px;
+
+    padding:14px 18px;
+
+    background:#f3e5f5;
+
+    border-left:6px solid #6A1B9A;
+
+    border-radius:10px;
+
+    color:#6A1B9A;
+
+    font-size:21px;
+
+}
+
+.pendamping-section{
+
+    background:#fafafa;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-top:15px;
+
+}

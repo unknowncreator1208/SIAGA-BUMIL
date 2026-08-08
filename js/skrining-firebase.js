@@ -79,6 +79,22 @@ async function loadProfil(){
 
         data.profil.usiaKehamilan || "";
 
+        document.getElementById("jumlahKehamilan").value =
+
+        data.profil.jumlahKehamilan || "";
+
+        document.getElementById("beratBadan").value =
+
+        data.profil.beratBadan || "";
+
+        document.getElementById("tinggiBadan").value =
+
+        data.profil.tinggiBadan || "";
+
+        document.getElementById("lila").value =
+
+        data.profil.lila || "";
+
         document.getElementById("nomorHP").value =
 
         data.profil.nomorHP || "";
@@ -86,6 +102,20 @@ async function loadProfil(){
         document.getElementById("alamat").value =
 
         data.profil.alamat || "";
+
+        const pendamping = data.profil.pendamping || {};
+
+document.getElementById("namaPendamping").value =
+pendamping.nama || "";
+
+document.getElementById("hubunganPendamping").value =
+pendamping.hubungan || "";
+
+document.getElementById("nomorHPPendamping").value =
+pendamping.nomorHP || "";
+
+document.getElementById("alamatPendamping").value =
+pendamping.alamat || "";
 
     }
 

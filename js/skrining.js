@@ -98,11 +98,71 @@ function ambilData(){
     // Identitas
     //----------------------------------
 
+    let beratBadan = Number(
+
+document.getElementById("beratBadan").value
+
+);
+
+let tinggiBadan = Number(
+
+document.getElementById("tinggiBadan").value
+
+);
+
+let lila = Number(
+
+document.getElementById("lila").value
+
+);
+
+let imt =
+
+beratBadan /
+
+Math.pow(
+
+tinggiBadan/100,
+
+2
+
+);
+
     let nama = document.getElementById("nama").value;
 
     let umur = Number(document.getElementById("umur").value);
 
     let usiaKehamilan = Number(document.getElementById("usiaKehamilan").value);
+
+    let beratBadan = Number(
+
+document.getElementById("beratBadan").value
+
+);
+
+let tinggiBadan = Number(
+
+document.getElementById("tinggiBadan").value
+
+);
+
+let lila = Number(
+
+document.getElementById("lila").value
+
+);
+
+let imt =
+
+beratBadan /
+
+Math.pow(
+
+tinggiBadan/100,
+
+2
+
+); 
 
     let nomorHP = document.getElementById("nomorHP").value;
 
@@ -170,7 +230,9 @@ function ambilData(){
     hipertensi,
     diabetes,
     perdarahan,
-    jumlahKehamilan
+    jumlahKehamilan,
+    lila,
+    imt,
 
 );
 
@@ -324,6 +386,16 @@ function tampilkanHasil(
 
         diastol:diastol,
 
+        jumlahKehamilan,
+        
+        beratBadan,
+        
+        tinggiBadan,
+        
+        lila,
+        
+        imt,
+
         skor:skor,
 
         status:status,
@@ -362,7 +434,9 @@ function hitungSkor(
     hipertensi,
     diabetes,
     perdarahan,
-    jumlahKehamilan
+    jumlahKehamilan,
+    lila,
+    imt
 
 ){
 
@@ -491,6 +565,44 @@ function hitungSkor(
 
     }
 
+    //--------------------------------
+    // // LILA
+    // //-------------------------------- 
+    
+    if(lila < 23.5){
+        
+        skor += 2;
+        faktorRisiko.push(
+            
+            "LILA kurang dari 23.5 cm (KEK)"
+        );
+    }
+
+    //--------------------------------
+    // // IMT
+    // //--------------------------------
+     
+    if(imt < 18.5){
+        skor += 2;
+        faktorRisiko.push(
+            "IMT kurang (Kurus)"
+        );
+    }
+    
+    else if(imt >=25 && imt <30){
+        
+        skor +=1;
+        faktorRisiko.push(
+            "IMT berlebih"
+        );
+    }
+    
+    else if(imt >=30){
+        skor +=2;
+        faktorRisiko.push(
+            "Obesitas"
+        );
+    }
 
     // ======================
     // Tanda Bahaya

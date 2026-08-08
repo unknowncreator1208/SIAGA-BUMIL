@@ -7,11 +7,38 @@ function simpanProfil(){
         nik: document.getElementById("nik").value,
         tanggalLahir: document.getElementById("tanggalLahir").value,
         usiaKehamilan: document.getElementById("usiaKehamilan").value,
+        jumlahKehamilan: document.getElementById("jumlahKehamilan").value,
+        beratBadan: document.getElementById("beratBadan").value,
+        tinggiBadan: document.getElementById("tinggiBadan").value,
+        lila: document.getElementById("lila").value,
         golonganDarah : document.getElementById("golonganDarah").value,
         nomorHP: document.getElementById("nomorHP").value,
         alamat: document.getElementById("alamat").value,
-        hpl: document.getElementById("hpl").value
+        hpl: document.getElementById("hpl").value,
 
+        pendamping: {
+
+        nama:
+        document.getElementById(
+            "namaPendamping"
+        ).value,
+
+        hubungan:
+        document.getElementById(
+            "hubunganPendamping"
+        ).value,
+
+        nomorHP:
+        document.getElementById(
+            "nomorHPPendamping"
+        ).value,
+
+        alamat:
+        document.getElementById(
+            "alamatPendamping"
+        ).value
+
+    }
     };
 
     Storage.simpan(
@@ -35,6 +62,10 @@ window.onload = function(){
         document.getElementById("nik").value = profil.nik;
         document.getElementById("tanggalLahir").value = profil.tanggalLahir;
         document.getElementById("usiaKehamilan").value = profil.usiaKehamilan;
+        document.getElementById("jumlahKehamilan").value = profil.jumlahKehamilan;
+        document.getElementById("beratBadan").value = profil.beratBadan;
+        document.getElementById("tinggiBadan").value = profil.tinggiBadan;
+        document.getElementById("lila").value = profil.lila;
         document.getElementById("golonganDarah").value = profil.golonganDarah;
         document.getElementById("nomorHP").value = profil.nomorHP;
         document.getElementById("alamat").value = profil.alamat;

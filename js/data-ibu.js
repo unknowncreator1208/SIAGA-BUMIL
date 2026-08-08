@@ -14,6 +14,16 @@ let hp = document.getElementById("hp").value;
 
 let alamat = document.getElementById("alamat").value;
 
+let usiaKehamilan = document.getElementById("usiaKehamilan").value;
+
+let jumlahKehamilan = document.getElementById("jumlahKehamilan").value;
+
+let beratBadan = document.getElementById("beratBadan").value;
+
+let tinggiBadan = document.getElementById("tinggiBadan").value;
+
+let lila = document.getElementById("lila").value;
+
 if(nama=="" || nik==""){
 
 alert("Data belum lengkap.");

@@ -68,6 +68,14 @@ window.simpanProfil = async function(){
 
             usiaKehamilan : Number(document.getElementById("usiaKehamilan").value),
 
+            jumlahKehamilan : Number(document.getElementById("jumlahKehamilan").value),
+
+            beratBadan : Number(document.getElementById("beratBadan").value),
+
+            tinggiBadan : Number(document.getElementById("tinggiBadan").value),
+
+            lila : document.getElementById("lila").value,
+
             golonganDarah : document.getElementById("golonganDarah").value,
 
             nomorHP : document.getElementById("nomorHP").value,
@@ -141,6 +149,18 @@ async function loadProfil(){
 
             document.getElementById("usiaKehamilan").value =
             data.profil.usiaKehamilan || "";
+
+            document.getElementById("jumlahKehamilan").value =
+            data.profil.jumlahKehamilan || "";
+
+            document.getElementById("beratBadan").value =
+            data.profil.beratBadan || "";
+            
+            document.getElementById("tinggiBadan").value =
+            data.profil.tinggiBadan || "";
+
+            document.getElementById("lila").value =
+            data.profil.lila || "";
 
             document.getElementById("golonganDarah").value =
             data.profil.golonganDarah || "";

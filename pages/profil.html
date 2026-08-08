@@ -21,6 +21,10 @@
 
 <form id="formProfil">
 
+<h2 class="section-title">
+    👩 Identitas Ibu Hamil
+</h2>
+
 <label>Nama Lengkap</label>
 
 <input type="text" id="nama">
@@ -40,6 +44,38 @@
 <label>Usia Kehamilan (Minggu)</label>
 
 <input type="number" id="usiaKehamilan">
+
+<label>Jumlah Kehamilan</label>
+
+<input
+type="number"
+id="jumlahKehamilan"
+min="1"
+placeholder="Contoh : 1">
+
+<label>Berat Badan (kg)</label>
+
+<input
+type="number"
+id="beratBadan"
+step="0.1"
+placeholder="Contoh : 60">
+
+<label>Tinggi Badan (cm)</label>
+
+<input
+type="number"
+id="tinggiBadan"
+step="0.1"
+placeholder="Contoh : 160">
+
+<label>Lingkar Lengan Atas (LILA) (cm)</label>
+
+<input
+type="number"
+id="lila"
+step="0.1"
+placeholder="Contoh : 24">
 
 <label>Golongan Darah</label>
 
@@ -65,6 +101,69 @@
 <input type="date" id="hpl">
 
 <br><br>
+
+<hr>
+
+<h2 class="section-title">
+    👨 Identitas Suami / Pendamping
+</h2>
+
+<div class="pendamping-section">
+
+    <label>Nama Suami / Pendamping</label>
+
+    <input
+        type="text"
+        id="namaPendamping"
+        placeholder="Masukkan nama suami / pendamping">
+
+
+    <label>Hubungan dengan Ibu</label>
+
+    <select id="hubunganPendamping">
+
+        <option value="">
+            Pilih hubungan
+        </option>
+
+        <option value="Suami">
+            Suami
+        </option>
+
+        <option value="Orang Tua">
+            Orang Tua
+        </option>
+
+        <option value="Anak">
+            Anak
+        </option>
+
+        <option value="Saudara">
+            Saudara
+        </option>
+
+        <option value="Lainnya">
+            Lainnya
+        </option>
+
+    </select>
+
+
+    <label>Nomor HP Suami / Pendamping</label>
+
+    <input
+        type="tel"
+        id="nomorHPPendamping"
+        placeholder="Contoh: 081234567890">
+
+
+    <label>Alamat Suami / Pendamping</label>
+
+    <textarea
+        id="alamatPendamping"
+        placeholder="Masukkan alamat jika berbeda dengan ibu"></textarea>
+
+</div>
 
 <button type="button" onclick="simpanProfil()">
     💾 Simpan Profil
