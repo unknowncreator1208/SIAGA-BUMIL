@@ -6,47 +6,38 @@
 import {
 
     db,
-
     collection,
-
     addDoc,
-
     getDocs,
-
     query,
-
     orderBy,
-
     serverTimestamp,
-
     doc,
-
     updateDoc
 
-}
+} from "../firebase.js";
 
-from "../firebase.js";
 
 class SkriningService{
 
+
     // =====================================
-    // Simpan Skrining
+    // SIMPAN SKRINING
     // =====================================
 
-    static async simpanSkrining(uid,data){
+    static async simpanSkrining(uid, data){
 
+        // ---------------------------------
         // Simpan ke riwayat skrining
+        // ---------------------------------
 
         await addDoc(
 
             collection(
 
                 db,
-
                 "users",
-
                 uid,
-
                 "skrining"
 
             ),
@@ -61,29 +52,49 @@ class SkriningService{
 
         );
 
+
+        // ---------------------------------
         // Update ringkasan user
+        // ---------------------------------
 
         await updateDoc(
 
             doc(
 
                 db,
-
                 "users",
-
                 uid
 
             ),
 
             {
 
-                statusRisikoTerakhir: data.status,
+                statusRisikoTerakhir:
+                    data.status || "-",
 
-                skorTerakhir: data.skor,
+                skorTerakhir:
+                    data.skor ?? 0,
 
-                tanggalSkriningTerakhir: new Date(),
+                tanggalSkriningTerakhir:
+                    serverTimestamp(),
 
-                usiaKehamilan: data.usiaKehamilan
+                usiaKehamilan:
+                    data.usiaKehamilan ?? null,
+
+                jumlahKehamilan:
+                    data.jumlahKehamilan ?? null,
+
+                beratBadan:
+                    data.beratBadan ?? null,
+
+                tinggiBadan:
+                    data.tinggiBadan ?? null,
+
+                lila:
+                    data.lila ?? null,
+
+                imt:
+                    data.imt ?? null
 
             }
 
@@ -91,8 +102,9 @@ class SkriningService{
 
     }
 
+
     // =====================================
-    // Ambil Riwayat
+    // AMBIL RIWAYAT
     // =====================================
 
     static async getRiwayat(uid){
@@ -102,22 +114,24 @@ class SkriningService{
             collection(
 
                 db,
-
                 "users",
-
                 uid,
-
                 "skrining"
 
             ),
 
-            orderBy("createdAt","desc")
+            orderBy(
+                "createdAt",
+                "desc"
+            )
 
         );
+
 
         const snapshot = await getDocs(q);
 
         const hasil = [];
+
 
         snapshot.forEach((docItem)=>{
 
@@ -131,10 +145,12 @@ class SkriningService{
 
         });
 
+
         return hasil;
 
     }
 
 }
+
 
 export default SkriningService;

@@ -369,3 +369,286 @@ LOGOUT
     background:#C62828;
 
 }
+
+/* ===================================
+   DETAIL SKRINING - DASHBOARD NAKES
+=================================== */
+
+.skrining-detail-card{
+
+    background:#ffffff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.07);
+
+}
+
+
+/* ===================================
+   STATUS RISIKO
+=================================== */
+
+.status-skrining{
+
+    text-align:center;
+
+    padding:20px;
+
+    margin-bottom:25px;
+
+    background:#f8fafc;
+
+    border-radius:15px;
+
+}
+
+.status-skrining h3{
+
+    margin:0 0 10px;
+
+    color:#555;
+
+}
+
+.status-value{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin:10px 0;
+
+}
+
+
+/* ===================================
+   JUDUL BAGIAN
+=================================== */
+
+.skrining-detail-card h3{
+
+    color:#2E7D32;
+
+    margin-top:25px;
+
+    margin-bottom:15px;
+
+}
+
+
+/* ===================================
+   TABEL PEMERIKSAAN
+=================================== */
+
+.skrining-detail-card table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:10px;
+
+    background:white;
+
+}
+
+.skrining-detail-card table td{
+
+    padding:13px;
+
+    border:1px solid #e5e7eb;
+
+    text-align:left;
+
+}
+
+.skrining-detail-card table td:first-child{
+
+    width:40%;
+
+    background:#f8fafc;
+
+}
+
+
+/* ===================================
+   FAKTOR RISIKO
+=================================== */
+
+.faktor-risiko{
+
+    background:#fff8e1;
+
+    border-left:6px solid #FFC107;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.faktor-risiko ul{
+
+    margin:0;
+
+    padding-left:20px;
+
+}
+
+.faktor-risiko li{
+
+    margin-bottom:7px;
+
+}
+
+
+/* ===================================
+   EARLY WARNING
+=================================== */
+
+.early-warning{
+
+    background:#ffebee;
+
+    border-left:6px solid #E53935;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.early-warning ul{
+
+    margin:0;
+
+    padding-left:20px;
+
+}
+
+.early-warning li{
+
+    margin-bottom:7px;
+
+}
+
+
+/* ===================================
+   REKOMENDASI
+=================================== */
+
+.rekomendasi{
+
+    background:#e8f5e9;
+
+    border-left:6px solid #43A047;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+.rekomendasi ul{
+
+    margin:0;
+
+    padding-left:20px;
+
+}
+
+.rekomendasi li{
+
+    margin-bottom:7px;
+
+}
+
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media(max-width:600px){
+
+    .skrining-detail-card{
+
+        padding:15px;
+
+    }
+
+    .skrining-detail-card table td{
+
+        padding:10px;
+
+        font-size:14px;
+
+    }
+
+    .skrining-detail-card table td:first-child{
+
+        width:45%;
+
+    }
+
+    .status-value{
+
+        font-size:22px;
+
+    }
+
+}
+
+/* ===================================
+   PROFIL DETAIL
+=================================== */
+
+.profil-detail-card{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.07);
+
+}
+
+.profil-detail-card h3{
+
+    color:#2E7D32;
+
+    margin-top:20px;
+
+}
+
+.profil-detail-card table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-bottom:25px;
+
+}
+
+.profil-detail-card td{
+
+    padding:12px;
+
+    border:1px solid #e5e7eb;
+
+}
+
+.profil-detail-card td:first-child{
+
+    width:35%;
+
+    background:#f8fafc;
+
+}

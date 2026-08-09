@@ -90,103 +90,107 @@ async function loadProfil(){
 
        document.getElementById("profil").innerHTML = `
 
-<h3>👩 Identitas Ibu Hamil</h3>
+<div class="profil-detail-card">
 
-<table border="1" width="100%">
+    <h3>👩 Identitas Ibu</h3>
 
-<tr>
-<td><b>Nama</b></td>
-<td>${profil.nama ?? "-"}</td>
-</tr>
+    <table>
 
-<tr>
-<td><b>NIK</b></td>
-<td>${profil.nik ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Nama</b></td>
+            <td>${profil.nama ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Umur</b></td>
-<td>${profil.umur ?? "-"} tahun</td>
-</tr>
+        <tr>
+            <td><b>NIK</b></td>
+            <td>${profil.nik ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Tanggal Lahir</b></td>
-<td>${profil.tanggalLahir ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Umur</b></td>
+            <td>${profil.umur ?? "-"} tahun</td>
+        </tr>
 
-<tr>
-<td><b>Usia Kehamilan</b></td>
-<td>${profil.usiaKehamilan ?? "-"} minggu</td>
-</tr>
+        <tr>
+            <td><b>Tanggal Lahir</b></td>
+            <td>${profil.tanggalLahir ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Jumlah Kehamilan</b></td>
-<td>${profil.jumlahKehamilan ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Usia Kehamilan</b></td>
+            <td>${profil.usiaKehamilan ?? "-"} minggu</td>
+        </tr>
 
-<tr>
-<td><b>Berat Badan</b></td>
-<td>${profil.beratBadan ?? "-"} kg</td>
-</tr>
+        <tr>
+            <td><b>Jumlah Kehamilan</b></td>
+            <td>${profil.jumlahKehamilan ?? "-"} kali</td>
+        </tr>
 
-<tr>
-<td><b>Tinggi Badan</b></td>
-<td>${profil.tinggiBadan ?? "-"} cm</td>
-</tr>
+        <tr>
+            <td><b>Berat Badan</b></td>
+            <td>${profil.beratBadan ?? "-"} kg</td>
+        </tr>
 
-<tr>
-<td><b>LILA</b></td>
-<td>${profil.lila ?? "-"} cm</td>
-</tr>
+        <tr>
+            <td><b>Tinggi Badan</b></td>
+            <td>${profil.tinggiBadan ?? "-"} cm</td>
+        </tr>
 
-<tr>
-<td><b>Golongan Darah</b></td>
-<td>${profil.golonganDarah ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>LILA</b></td>
+            <td>${profil.lila ?? "-"} cm</td>
+        </tr>
 
-<tr>
-<td><b>No. HP</b></td>
-<td>${profil.nomorHP ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Golongan Darah</b></td>
+            <td>${profil.golonganDarah ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Alamat</b></td>
-<td>${profil.alamat ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>No. HP</b></td>
+            <td>${profil.nomorHP ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>HPL</b></td>
-<td>${profil.hpl ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Alamat</b></td>
+            <td>${profil.alamat ?? "-"}</td>
+        </tr>
 
-</table>
+        <tr>
+            <td><b>HPL</b></td>
+            <td>${profil.hpl ?? "-"}</td>
+        </tr>
+
+    </table>
 
 
-<h3>👨 Identitas Suami / Pendamping</h3>
+    <h3>👨 Identitas Suami / Pendamping</h3>
 
-<table border="1" width="100%">
+    <table>
 
-<tr>
-<td><b>Nama</b></td>
-<td>${pendamping.nama ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Nama</b></td>
+            <td>${pendamping.nama ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Hubungan</b></td>
-<td>${pendamping.hubungan ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Hubungan</b></td>
+            <td>${pendamping.hubungan ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>No. HP</b></td>
-<td>${pendamping.nomorHP ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>No. HP</b></td>
+            <td>${pendamping.nomorHP ?? "-"}</td>
+        </tr>
 
-<tr>
-<td><b>Alamat</b></td>
-<td>${pendamping.alamat ?? "-"}</td>
-</tr>
+        <tr>
+            <td><b>Alamat</b></td>
+            <td>${pendamping.alamat ?? "-"}</td>
+        </tr>
 
-</table>
+    </table>
+
+</div>
 
 `;
 
@@ -214,16 +218,16 @@ async function loadSkriningTerakhir(){
             collection(
 
                 db,
-
                 "users",
-
                 uid,
-
                 "skrining"
 
             ),
 
-            orderBy("createdAt","desc"),
+            orderBy(
+                "createdAt",
+                "desc"
+            ),
 
             limit(1)
 
@@ -243,61 +247,341 @@ async function loadSkriningTerakhir(){
 
         const data = snapshot.docs[0].data();
 
+
+        // ======================================
+        // FORMAT DATA
+        // ======================================
+
+        const sistol = data.sistol ?? "-";
+
+        const diastol = data.diastol ?? "-";
+
+        const beratBadan =
+            data.beratBadan ?? "-";
+
+        const tinggiBadan =
+            data.tinggiBadan ?? "-";
+
+        const lila =
+            data.lila ?? "-";
+
+        const imt =
+            data.imt != null
+            ? Number(data.imt).toFixed(1)
+            : "-";
+
+        const jumlahKehamilan =
+            data.jumlahKehamilan ?? "-";
+
+
+        // ======================================
+        // TANGGAL SKRINING
+        // ======================================
+
+        let tanggal = "-";
+
+        if(data.createdAt){
+
+            try{
+
+                tanggal = data.createdAt
+                    .toDate()
+                    .toLocaleDateString("id-ID");
+
+            }
+
+            catch(error){
+
+                tanggal = "-";
+
+            }
+
+        }
+
+
+        // ======================================
+        // FAKTOR RISIKO
+        // ======================================
+
+        let faktorRisiko =
+
+            data.faktorRisiko || [];
+
+        let htmlFaktor = "";
+
+        if(faktorRisiko.length > 0){
+
+            htmlFaktor = "<ul>";
+
+            faktorRisiko.forEach(function(faktor){
+
+                htmlFaktor +=
+
+                    "<li>" +
+                    faktor +
+                    "</li>";
+
+            });
+
+            htmlFaktor += "</ul>";
+
+        }
+        else{
+
+            htmlFaktor =
+                "<span>Tidak ditemukan faktor risiko.</span>";
+
+        }
+
+
+        // ======================================
+        // EARLY WARNING
+        // ======================================
+
+        let earlyWarning =
+
+            data.earlyWarning || [];
+
+        let htmlWarning = "";
+
+        if(earlyWarning.length > 0){
+
+            htmlWarning = "<ul>";
+
+            earlyWarning.forEach(function(warning){
+
+                htmlWarning +=
+
+                    "<li>" +
+                    warning +
+                    "</li>";
+
+            });
+
+            htmlWarning += "</ul>";
+
+        }
+        else{
+
+            htmlWarning =
+                "<span>Tidak ada tanda bahaya.</span>";
+
+        }
+
+
+        // ======================================
+        // REKOMENDASI
+        // ======================================
+
+        let rekomendasi =
+
+            data.rekomendasi || [];
+
+        let htmlRekomendasi = "";
+
+        if(rekomendasi.length > 0){
+
+            htmlRekomendasi = "<ul>";
+
+            rekomendasi.forEach(function(item){
+
+                htmlRekomendasi +=
+
+                    "<li>" +
+                    item +
+                    "</li>";
+
+            });
+
+            htmlRekomendasi += "</ul>";
+
+        }
+        else{
+
+            htmlRekomendasi =
+                "<span>-</span>";
+
+        }
+
+
+        // ======================================
+        // TAMPILKAN DATA
+        // ======================================
+
         document.getElementById("skrining").innerHTML =
 
         `
 
-        <table border="1" width="100%">
+        <div class="skrining-detail-card">
 
-            <tr>
 
-                <td><b>Status Risiko</b></td>
+            <!-- STATUS -->
 
-                <td>${data.status ?? "-"}</td>
+            <div class="status-skrining">
 
-            </tr>
+                <h3>Status Risiko</h3>
 
-            <tr>
+                <div class="status-value">
 
-                <td><b>Skor</b></td>
+                    ${data.status ?? "-"}
 
-                <td>${data.skor ?? "-"}</td>
+                </div>
 
-            </tr>
+                <p>
 
-            <tr>
+                    Skor Risiko :
+                    <b>${data.skor ?? "-"}</b>
 
-                <td><b>Tekanan Darah</b></td>
+                </p>
 
-                <td>${data.sistol}/${data.diastol} mmHg</td>
+            </div>
 
-            </tr>
 
-            <tr>
+            <!-- INFORMASI PEMERIKSAAN -->
 
-                <td><b>Faktor Risiko</b></td>
+            <h3>🩺 Data Pemeriksaan</h3>
 
-                <td>${(data.faktorRisiko || []).join("<br>")}</td>
+            <table>
 
-            </tr>
+                <tr>
 
-            <tr>
+                    <td>
+                        <b>Tanggal Skrining</b>
+                    </td>
 
-                <td><b>Early Warning</b></td>
+                    <td>
+                        ${tanggal}
+                    </td>
 
-                <td>${(data.earlyWarning || []).join("<br>")}</td>
+                </tr>
 
-            </tr>
 
-            <tr>
+                <tr>
 
-                <td><b>Rekomendasi</b></td>
+                    <td>
+                        <b>Tekanan Darah</b>
+                    </td>
 
-                <td>${(data.rekomendasi || []).join("<br>")}</td>
+                    <td>
 
-            </tr>
+                        ${sistol}/${diastol} mmHg
 
-        </table>
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Berat Badan</b>
+                    </td>
+
+                    <td>
+
+                        ${beratBadan} kg
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Tinggi Badan</b>
+                    </td>
+
+                    <td>
+
+                        ${tinggiBadan} cm
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>LILA</b>
+                    </td>
+
+                    <td>
+
+                        ${lila} cm
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>IMT</b>
+                    </td>
+
+                    <td>
+
+                        ${imt}
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <b>Jumlah Kehamilan</b>
+                    </td>
+
+                    <td>
+
+                        ${jumlahKehamilan} kali
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <!-- FAKTOR RISIKO -->
+
+            <h3>⚠ Faktor Risiko</h3>
+
+            <div class="faktor-risiko">
+
+                ${htmlFaktor}
+
+            </div>
+
+
+            <!-- EARLY WARNING -->
+
+            <h3>🚨 Early Warning</h3>
+
+            <div class="early-warning">
+
+                ${htmlWarning}
+
+            </div>
+
+
+            <!-- REKOMENDASI -->
+
+            <h3>📋 Rekomendasi</h3>
+
+            <div class="rekomendasi">
+
+                ${htmlRekomendasi}
+
+            </div>
+
+
+        </div>
 
         `;
 
@@ -305,11 +589,15 @@ async function loadSkriningTerakhir(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Gagal memuat skrining terakhir:",
+            error
+        );
 
     }
 
 }
+
 async function loadMonitoringTTD(){
 
     try{
