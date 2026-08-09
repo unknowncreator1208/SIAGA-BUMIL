@@ -13,14 +13,13 @@ body{
 
     margin:80px auto;
 
+    padding:40px;
+
+    border-radius:25px;
+
     background:white;
 
-    padding:30px;
-
-    border-radius:15px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
 }
 
 .login-container h1{
@@ -234,6 +233,17 @@ select{
     box-sizing:border-box;
 }
 
+input:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    border:1px solid #1976d2;
+
+    box-shadow:0 0 10px rgba(25,118,210,.2);
+}
+
 .container input,
 
 .container textarea{
@@ -282,16 +292,15 @@ select{
 
 .hasil-card{
 
-margin-top:30px;
+    border:none;
 
-padding:20px;
+    background:white;
 
-background:#FFF8F8;
+    border-radius:20px;
 
-border-left:8px solid #D81B60;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 
-border-radius:10px;
-
+    padding:30px;
 }
 
 .hasil-card h2{
@@ -674,3 +683,29 @@ LOGOUT
     margin-top:15px;
 
 }
+
+.card{
+
+    animation:fade .6s ease;
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
