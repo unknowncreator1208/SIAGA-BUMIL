@@ -1,40 +1,94 @@
-/* =====================================
+/* =========================================
    SIAGA BUMIL
    skrining.js
-===================================== */
+   ========================================= */
 
 
-/* =====================================
+/* =========================================
    VARIABEL GLOBAL
-===================================== */
+========================================= */
 
 let skor = 0;
 let status = "";
-let rekomendasi = [];
 let warna = "";
+
 let faktorRisiko = [];
 let earlyWarning = [];
+let rekomendasi = [];
 
 
-/* =====================================
-   RESET DATA
-===================================== */
+/* =========================================
+   DATA PEMERIKSAAN
+========================================= */
 
-function resetData(){
+let dataPemeriksaan = {
+    nama: "",
+    umur: 0,
+    usiaKehamilan: 0,
+    jumlahKehamilan: 0,
 
-    skor = 0;
-    status = "";
-    rekomendasi = [];
-    warna = "";
-    faktorRisiko = [];
-    earlyWarning = [];
+    beratBadan: 0,
+    tinggiBadan: 0,
+    lila: 0,
+    imt: 0,
+
+    sistol: 0,
+    diastol: 0,
+
+    hipertensi: "Tidak",
+    diabetes: "Tidak",
+    perdarahan: "Tidak"
+};
+
+
+/* =========================================
+   HALAMAN DIBUKA
+========================================= */
+
+window.onload = function(){
+
+    console.log("✅ Halaman Skrining Dibuka");
+
+};
+
+
+/* =========================================
+   FUNGSI TAMPILKAN PROFIL
+   Profil sekarang dimuat oleh
+   skrining-firebase.js
+========================================= */
+
+function tampilkanProfil(){
+
+    // Profil dimuat oleh skrining-firebase.js
 
 }
 
 
-/* =====================================
-   AMBIL RADIO BUTTON
-===================================== */
+/* =========================================
+   RESET DATA
+========================================= */
+
+function resetData(){
+
+    skor = 0;
+
+    status = "";
+
+    warna = "";
+
+    faktorRisiko = [];
+
+    earlyWarning = [];
+
+    rekomendasi = [];
+
+}
+
+
+/* =========================================
+   RADIO BUTTON
+========================================= */
 
 function ambilRadio(namaRadio){
 
@@ -53,18 +107,77 @@ function ambilRadio(namaRadio){
 }
 
 
-/* =====================================
-   HITUNG RISIKO
-===================================== */
+/* =========================================
+   HITUNG IMT
+========================================= */
+
+function hitungIMT(beratBadan, tinggiBadan){
+
+    if(
+        !beratBadan ||
+        !tinggiBadan ||
+        tinggiBadan <= 0
+    ){
+
+        return 0;
+
+    }
+
+    const tinggiMeter = tinggiBadan / 100;
+
+    return beratBadan /
+        Math.pow(tinggiMeter, 2);
+
+}
+
+
+/* =========================================
+   KATEGORI IMT
+========================================= */
+
+function kategoriIMT(imt){
+
+    if(!imt || imt <= 0){
+
+        return "Tidak dapat dihitung";
+
+    }
+
+    if(imt < 18.5){
+
+        return "IMT rendah";
+
+    }
+
+    if(imt < 25){
+
+        return "IMT normal";
+
+    }
+
+    if(imt < 30){
+
+        return "IMT berlebih";
+
+    }
+
+    return "Obesitas";
+
+}
+
+
+/* =========================================
+   TOMBOL HITUNG RISIKO
+========================================= */
 
 function ambilData(){
 
     resetData();
 
 
-    /* ================================
-       IDENTITAS
-    ================================= */
+    /* =====================================
+       AMBIL DATA PROFIL
+    ===================================== */
 
     const namaElement =
         document.getElementById("nama");
@@ -89,7 +202,7 @@ function ambilData(){
 
 
     const nama =
-        namaElement ? namaElement.value : "";
+        namaElement ? namaElement.value.trim() : "";
 
     const umur =
         umurElement
@@ -107,10 +220,6 @@ function ambilData(){
         : 0;
 
 
-    /* ================================
-       ANTROPOMETRI
-    ================================= */
-
     const beratBadan =
         beratBadanElement
         ? Number(beratBadanElement.value)
@@ -127,47 +236,20 @@ function ambilData(){
         : 0;
 
 
-    /* ================================
+    /* =====================================
        HITUNG IMT
-    ================================= */
+    ===================================== */
 
-    let imt = 0;
-
-    if(
-        beratBadan > 0 &&
-        tinggiBadan > 0
-    ){
-
-        imt =
-            beratBadan /
-            Math.pow(
-                tinggiBadan / 100,
-                2
-            );
-
-    }
+    const imt =
+        hitungIMT(
+            beratBadan,
+            tinggiBadan
+        );
 
 
-    /* ================================
-       TAMPILKAN IMT
-    ================================= */
-
-    const imtElement =
-        document.getElementById("imt");
-
-    if(imtElement){
-
-        imtElement.value =
-            imt > 0
-            ? imt.toFixed(1)
-            : "";
-
-    }
-
-
-    /* ================================
+    /* =====================================
        TEKANAN DARAH
-    ================================= */
+    ===================================== */
 
     const sistolElement =
         document.getElementById("sistol");
@@ -187,9 +269,9 @@ function ambilData(){
         : 0;
 
 
-    /* ================================
-       FAKTOR RISIKO
-    ================================= */
+    /* =====================================
+       RIWAYAT PENYAKIT
+    ===================================== */
 
     const hipertensi =
         ambilRadio("hipertensi");
@@ -201,13 +283,75 @@ function ambilData(){
         ambilRadio("perdarahan");
 
 
-    /* ================================
+    /* =====================================
+       SIMPAN DATA KE VARIABEL GLOBAL
+    ===================================== */
+
+    dataPemeriksaan = {
+
+        nama: nama,
+
+        umur: umur,
+
+        usiaKehamilan:
+            usiaKehamilan,
+
+        jumlahKehamilan:
+            jumlahKehamilan,
+
+        beratBadan:
+            beratBadan,
+
+        tinggiBadan:
+            tinggiBadan,
+
+        lila:
+            lila,
+
+        imt:
+            imt,
+
+        sistol:
+            sistol,
+
+        diastol:
+            diastol,
+
+        hipertensi:
+            hipertensi,
+
+        diabetes:
+            diabetes,
+
+        perdarahan:
+            perdarahan
+
+    };
+
+
+    /* =====================================
        VALIDASI
-    ================================= */
+    ===================================== */
 
     if(nama === ""){
 
-        alert("Nama belum tersedia.");
+        alert(
+            "Nama ibu belum tersedia. Silakan lengkapi profil."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !umur ||
+        umur <= 0
+    ){
+
+        alert(
+            "Umur ibu belum tersedia."
+        );
 
         return;
 
@@ -216,7 +360,9 @@ function ambilData(){
 
     if(
         !sistol ||
-        !diastol
+        !diastol ||
+        sistol <= 0 ||
+        diastol <= 0
     ){
 
         alert(
@@ -228,12 +374,11 @@ function ambilData(){
     }
 
 
-    /* ================================
+    /* =====================================
        HITUNG SKOR
-    ================================= */
+    ===================================== */
 
     hitungSkor(
-
         umur,
         sistol,
         diastol,
@@ -243,64 +388,573 @@ function ambilData(){
         jumlahKehamilan,
         lila,
         imt
-
     );
 
 
-    /* ================================
-       STATUS
-    ================================= */
+    /* =====================================
+       TENTUKAN STATUS
+    ===================================== */
 
     tentukanStatus();
 
 
-    /* ================================
+    /* =====================================
        TAMPILKAN HASIL
-    ================================= */
+    ===================================== */
 
-    tampilkanHasil({
+    tampilkanHasil();
 
-        nama,
-        umur,
-        usiaKehamilan,
-        jumlahKehamilan,
-        beratBadan,
-        tinggiBadan,
-        lila,
-        imt,
-        sistol,
-        diastol
-
-    });
 
 }
 
 
-/* =====================================
+/* =========================================
+   HITUNG SKOR RISIKO
+========================================= */
+
+function hitungSkor(
+
+    umur,
+    sistol,
+    diastol,
+    hipertensi,
+    diabetes,
+    perdarahan,
+    jumlahKehamilan,
+    lila,
+    imt
+
+){
+
+
+    /* =====================================
+       1. USIA IBU
+    ===================================== */
+
+    if(umur < 20){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Usia ibu kurang dari 20 tahun."
+        );
+
+    }
+
+
+    if(umur > 35){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Usia ibu lebih dari 35 tahun."
+        );
+
+    }
+
+
+    /* =====================================
+       2. JUMLAH KEHAMILAN
+    ===================================== */
+
+    if(jumlahKehamilan >= 5){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Riwayat kehamilan 5 kali atau lebih."
+        );
+
+    }
+
+
+    /* =====================================
+       3. RIWAYAT HIPERTENSI
+    ===================================== */
+
+    if(hipertensi === "Ya"){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Memiliki riwayat hipertensi/darah tinggi."
+        );
+
+    }
+
+
+    /* =====================================
+       4. RIWAYAT DIABETES
+    ===================================== */
+
+    if(diabetes === "Ya"){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Memiliki riwayat diabetes/penyakit gula."
+        );
+
+    }
+
+
+    /* =====================================
+       5. PERDARAHAN
+    ===================================== */
+
+    if(perdarahan === "Ya"){
+
+        skor += 3;
+
+        faktorRisiko.push(
+            "Mengalami atau memiliki keluhan perdarahan."
+        );
+
+        earlyWarning.push(
+            "🚨 Perdarahan saat kehamilan memerlukan pemeriksaan segera di fasilitas kesehatan."
+        );
+
+    }
+
+
+    /* =====================================
+       6. TEKANAN DARAH
+    ===================================== */
+
+    if(
+        sistol >= 140 ||
+        diastol >= 90
+    ){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Tekanan darah tinggi (≥140/90 mmHg)."
+        );
+
+    }
+
+
+    /* =====================================
+       7. HIPERTENSI BERAT
+    ===================================== */
+
+    if(
+        sistol >= 160 ||
+        diastol >= 110
+    ){
+
+        skor += 4;
+
+        earlyWarning.push(
+            "🚨 Tekanan darah sangat tinggi (≥160/110 mmHg). Segera menuju fasilitas kesehatan."
+        );
+
+    }
+
+
+    /* =====================================
+       8. TEKANAN DARAH RENDAH
+    ===================================== */
+
+    if(
+        sistol < 90 ||
+        diastol < 60
+    ){
+
+        skor += 1;
+
+        faktorRisiko.push(
+            "Tekanan darah rendah (<90/60 mmHg)."
+        );
+
+        earlyWarning.push(
+            "⚠ Tekanan darah rendah perlu diperhatikan terutama bila disertai pusing, lemas atau perdarahan."
+        );
+
+    }
+
+
+    /* =====================================
+       9. LILA / KEK
+    ===================================== */
+
+    if(lila > 0){
+
+        if(lila < 23.5){
+
+            skor += 2;
+
+            faktorRisiko.push(
+                "LILA kurang dari 23,5 cm, mengarah pada risiko KEK."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================
+       10. IMT
+    ===================================== */
+
+    /*
+       IMT tetap dihitung dan disimpan sebagai
+       informasi antropometri.
+
+       Namun IMT tidak otomatis menambah skor
+       risiko selama kehamilan karena berat badan
+       ibu berubah sesuai usia kehamilan.
+    */
+
+    if(imt > 0){
+
+        const kategori =
+            kategoriIMT(imt);
+
+        if(imt < 18.5){
+
+            faktorRisiko.push(
+                "IMT sebelum/awal kehamilan dapat berada pada kategori rendah (" +
+                imt.toFixed(1) +
+                ")."
+            );
+
+        }
+
+        else if(imt >= 25){
+
+            faktorRisiko.push(
+                "IMT sebelum/awal kehamilan dapat berada pada kategori " +
+                kategori +
+                " (" +
+                imt.toFixed(1) +
+                ")."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================
+       11. TANDA BAHAYA
+    ===================================== */
+
+    const nyeriKepala =
+        document.getElementById(
+            "nyeriKepala"
+        );
+
+    const pandanganKabur =
+        document.getElementById(
+            "pandanganKabur"
+        );
+
+    const kejang =
+        document.getElementById(
+            "kejang"
+        );
+
+    const gerakJanin =
+        document.getElementById(
+            "gerakJanin"
+        );
+
+    const sesak =
+        document.getElementById(
+            "sesak"
+        );
+
+    const demam =
+        document.getElementById(
+            "demam"
+        );
+
+
+    /* =====================================
+       NYERI KEPALA
+    ===================================== */
+
+    if(
+        nyeriKepala &&
+        nyeriKepala.checked
+    ){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Nyeri kepala hebat."
+        );
+
+        earlyWarning.push(
+            "⚠ Nyeri kepala hebat pada kehamilan memerlukan pemeriksaan segera, terutama bila disertai tekanan darah tinggi."
+        );
+
+    }
+
+
+    /* =====================================
+       PANDANGAN KABUR
+    ===================================== */
+
+    if(
+        pandanganKabur &&
+        pandanganKabur.checked
+    ){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Pandangan kabur."
+        );
+
+        earlyWarning.push(
+            "⚠ Pandangan kabur perlu segera diperiksa."
+        );
+
+    }
+
+
+    /* =====================================
+       KEJANG
+    ===================================== */
+
+    if(
+        kejang &&
+        kejang.checked
+    ){
+
+        skor += 5;
+
+        faktorRisiko.push(
+            "Kejang."
+        );
+
+        earlyWarning.push(
+            "🚨 Kejang merupakan keadaan gawat darurat. Segera menuju fasilitas kesehatan."
+        );
+
+    }
+
+
+    /* =====================================
+       GERAKAN JANIN BERKURANG
+    ===================================== */
+
+    if(
+        gerakJanin &&
+        gerakJanin.checked
+    ){
+
+        skor += 3;
+
+        faktorRisiko.push(
+            "Gerakan janin berkurang."
+        );
+
+        earlyWarning.push(
+            "🚨 Gerakan janin berkurang memerlukan pemeriksaan segera."
+        );
+
+    }
+
+
+    /* =====================================
+       SESAK NAPAS
+    ===================================== */
+
+    if(
+        sesak &&
+        sesak.checked
+    ){
+
+        skor += 3;
+
+        faktorRisiko.push(
+            "Sesak napas."
+        );
+
+        earlyWarning.push(
+            "🚨 Sesak napas yang berat atau memburuk memerlukan pemeriksaan segera."
+        );
+
+    }
+
+
+    /* =====================================
+       DEMAM
+    ===================================== */
+
+    if(
+        demam &&
+        demam.checked
+    ){
+
+        skor += 2;
+
+        faktorRisiko.push(
+            "Demam tinggi."
+        );
+
+        earlyWarning.push(
+            "⚠ Demam tinggi saat kehamilan perlu diperiksa oleh tenaga kesehatan."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   TENTUKAN STATUS
+========================================= */
+
+function tentukanStatus(){
+
+
+    /*
+       EARLY WARNING / KONDISI DARURAT
+       diprioritaskan dibanding skor.
+    */
+
+    if(earlyWarning.length > 0){
+
+        status = "🔴 Risiko Tinggi";
+
+        warna = "#F44336";
+
+        rekomendasi = [
+
+            "Segera lakukan pemeriksaan oleh tenaga kesehatan.",
+
+            "Jika terdapat tanda kegawatan, segera menuju fasilitas kesehatan atau Rumah Sakit.",
+
+            "Jangan menunda pemeriksaan.",
+
+            "Bawa buku KIA dan informasi hasil pemeriksaan bila tersedia."
+
+        ];
+
+        return;
+
+    }
+
+
+    /* =====================================
+       RISIKO BERDASARKAN SKOR
+    ===================================== */
+
+    if(skor <= 2){
+
+        status = "🟢 Risiko Rendah";
+
+        warna = "#4CAF50";
+
+        rekomendasi = [
+
+            "Lanjutkan pemeriksaan kehamilan sesuai jadwal.",
+
+            "Minum Tablet Tambah Darah sesuai anjuran.",
+
+            "Konsumsi makanan bergizi seimbang.",
+
+            "Istirahat yang cukup.",
+
+            "Tetap pantau keluhan selama kehamilan."
+
+        ];
+
+    }
+
+    else if(skor <= 6){
+
+        status = "🟡 Risiko Sedang";
+
+        warna = "#FFC107";
+
+        rekomendasi = [
+
+            "Lakukan konsultasi dengan bidan atau tenaga kesehatan.",
+
+            "Pantau tekanan darah secara berkala.",
+
+            "Jangan melewatkan pemeriksaan kehamilan.",
+
+            "Perhatikan tanda bahaya kehamilan.",
+
+            "Segera periksa jika muncul keluhan yang memburuk."
+
+        ];
+
+    }
+
+    else{
+
+        status = "🔴 Risiko Tinggi";
+
+        warna = "#F44336";
+
+        rekomendasi = [
+
+            "Segera konsultasikan kondisi kepada bidan atau dokter.",
+
+            "Jangan menunda pemeriksaan.",
+
+            "Pertimbangkan pemeriksaan di fasilitas kesehatan sesuai arahan tenaga kesehatan.",
+
+            "Datang bersama suami atau pendamping jika memungkinkan.",
+
+            "Ikuti seluruh anjuran tenaga kesehatan."
+
+        ];
+
+    }
+
+}
+
+
+/* =========================================
    TAMPILKAN HASIL
-===================================== */
+========================================= */
 
-function tampilkanHasil(data){
-
-    const {
-
-        nama,
-        umur,
-        usiaKehamilan,
-        jumlahKehamilan,
-        beratBadan,
-        tinggiBadan,
-        lila,
-        imt,
-        sistol,
-        diastol
-
-    } = data;
+function tampilkanHasil(){
 
 
-    /* ================================
+    const nama =
+        dataPemeriksaan.nama;
+
+    const umur =
+        dataPemeriksaan.umur;
+
+    const usiaKehamilan =
+        dataPemeriksaan.usiaKehamilan;
+
+    const jumlahKehamilan =
+        dataPemeriksaan.jumlahKehamilan;
+
+    const beratBadan =
+        dataPemeriksaan.beratBadan;
+
+    const tinggiBadan =
+        dataPemeriksaan.tinggiBadan;
+
+    const lila =
+        dataPemeriksaan.lila;
+
+    const imt =
+        dataPemeriksaan.imt;
+
+    const sistol =
+        dataPemeriksaan.sistol;
+
+    const diastol =
+        dataPemeriksaan.diastol;
+
+
+    /* =====================================
        FAKTOR RISIKO
-    ================================= */
+    ===================================== */
 
     let daftarFaktor = "";
 
@@ -308,27 +962,32 @@ function tampilkanHasil(data){
 
         daftarFaktor = "<ul>";
 
-        faktorRisiko.forEach(function(item){
+        faktorRisiko.forEach(
+            function(item){
 
-            daftarFaktor +=
-                "<li>" + item + "</li>";
+                daftarFaktor +=
+                    "<li>" +
+                    item +
+                    "</li>";
 
-        });
+            }
+        );
 
         daftarFaktor += "</ul>";
 
     }
+
     else{
 
         daftarFaktor =
-            "Tidak ditemukan faktor risiko.";
+            "Tidak ditemukan faktor risiko berdasarkan data yang dimasukkan.";
 
     }
 
 
-    /* ================================
+    /* =====================================
        EARLY WARNING
-    ================================= */
+    ===================================== */
 
     let daftarWarning = "";
 
@@ -336,49 +995,75 @@ function tampilkanHasil(data){
 
         daftarWarning = "<ul>";
 
-        earlyWarning.forEach(function(item){
+        earlyWarning.forEach(
+            function(item){
 
-            daftarWarning +=
-                "<li>" + item + "</li>";
+                daftarWarning +=
+                    "<li>" +
+                    item +
+                    "</li>";
 
-        });
+            }
+        );
 
         daftarWarning += "</ul>";
 
     }
+
     else{
 
         daftarWarning =
-            "Tidak ada tanda bahaya.";
+            "Tidak ada tanda bahaya yang terdeteksi dari data pemeriksaan.";
 
     }
 
 
-    /* ================================
+    /* =====================================
        REKOMENDASI
-    ================================= */
+    ===================================== */
 
     let daftarRekomendasi = "<ul>";
 
-    rekomendasi.forEach(function(item){
+    rekomendasi.forEach(
+        function(item){
 
-        daftarRekomendasi +=
-            "<li>" + item + "</li>";
+            daftarRekomendasi +=
+                "<li>" +
+                item +
+                "</li>";
 
-    });
+        }
+    );
 
     daftarRekomendasi += "</ul>";
 
 
-    /* ================================
-       HASIL
-    ================================= */
+    /* =====================================
+       FORMAT IMT
+    ===================================== */
 
-    const hasil =
+    let tampilanIMT = "-";
+
+    if(imt > 0){
+
+        tampilanIMT =
+            imt.toFixed(1) +
+            " (" +
+            kategoriIMT(imt) +
+            ")";
+
+    }
+
+
+    /* =====================================
+       HASIL KE HTML
+    ===================================== */
+
+    const hasilElement =
         document.getElementById("hasil");
 
 
-    if(!hasil){
+    if(!hasilElement){
 
         console.error(
             "Element #hasil tidak ditemukan."
@@ -389,7 +1074,7 @@ function tampilkanHasil(data){
     }
 
 
-    hasil.innerHTML = `
+    hasilElement.innerHTML = `
 
         <h2>HASIL SKRINING</h2>
 
@@ -431,7 +1116,7 @@ function tampilkanHasil(data){
         <br>
 
         <b>IMT :</b>
-        ${imt ? imt.toFixed(1) : "-"} kg/m²
+        ${tampilanIMT}
 
         <br>
 
@@ -451,19 +1136,25 @@ function tampilkanHasil(data){
 
         <hr>
 
-        <h3>⚠ Faktor Risiko</h3>
+        <h3>
+            ⚠ Faktor Risiko
+        </h3>
 
         ${daftarFaktor}
 
         <hr>
 
-        <h3>🚨 Early Warning</h3>
+        <h3>
+            🚨 Early Warning
+        </h3>
 
         ${daftarWarning}
 
         <hr>
 
-        <h3>📋 Rekomendasi</h3>
+        <h3>
+            📋 Rekomendasi
+        </h3>
 
         ${daftarRekomendasi}
 
@@ -479,9 +1170,9 @@ function tampilkanHasil(data){
     `;
 
 
-    /* ================================
+    /* =====================================
        SIMPAN KE FIREBASE
-    ================================= */
+    ===================================== */
 
     if(
         typeof window.simpanHasilSkrining ===
@@ -490,9 +1181,11 @@ function tampilkanHasil(data){
 
         window.simpanHasilSkrining({
 
-            nama: nama,
+            nama:
+                nama,
 
-            umur: umur,
+            umur:
+                umur,
 
             usiaKehamilan:
                 usiaKehamilan,
@@ -518,6 +1211,15 @@ function tampilkanHasil(data){
             diastol:
                 diastol,
 
+            hipertensi:
+                dataPemeriksaan.hipertensi,
+
+            diabetes:
+                dataPemeriksaan.diabetes,
+
+            perdarahan:
+                dataPemeriksaan.perdarahan,
+
             skor:
                 skor,
 
@@ -537,465 +1239,38 @@ function tampilkanHasil(data){
 
     }
 
+    else{
+
+        console.error(
+            "simpanHasilSkrining tidak ditemukan."
+        );
+
+    }
+
 }
 
 
-/* =====================================
+/* =========================================
    SIMPAN RIWAYAT
-===================================== */
+========================================= */
 
 function simpanRiwayat(){
 
     alert(
-        "Data sudah otomatis tersimpan ke database."
+        "Data skrining sudah otomatis disimpan ke database."
     );
 
 }
 
 
-/* =====================================
-   HITUNG SKOR
-===================================== */
-
-function hitungSkor(
-
-    umur,
-    sistol,
-    diastol,
-    hipertensi,
-    diabetes,
-    perdarahan,
-    jumlahKehamilan,
-    lila,
-    imt
-
-){
-
-    /* ================================
-       UMUR
-    ================================= */
-
-    if(umur < 20){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Usia ibu kurang dari 20 tahun"
-        );
-
-    }
-
-
-    if(umur > 35){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Usia ibu lebih dari 35 tahun"
-        );
-
-    }
-
-
-    /* ================================
-       HIPERTENSI / DARAH TINGGI
-    ================================= */
-
-    if(hipertensi === "Ya"){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Memiliki riwayat hipertensi / darah tinggi"
-        );
-
-    }
-
-
-    /* ================================
-       DIABETES / PENYAKIT GULA
-    ================================= */
-
-    if(diabetes === "Ya"){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Memiliki riwayat diabetes / penyakit gula"
-        );
-
-    }
-
-
-    /* ================================
-       PERDARAHAN
-    ================================= */
-
-    if(perdarahan === "Ya"){
-
-        skor += 3;
-
-        faktorRisiko.push(
-            "Mengalami perdarahan"
-        );
-
-        earlyWarning.push(
-            "🚨 Perdarahan saat hamil merupakan keadaan darurat. Segera menuju fasilitas kesehatan."
-        );
-
-    }
-
-
-    /* ================================
-       JUMLAH KEHAMILAN
-    ================================= */
-
-    if(jumlahKehamilan >= 5){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Kehamilan 5 kali atau lebih"
-        );
-
-    }
-
-
-    /* ================================
-       TEKANAN DARAH
-    ================================= */
-
-    if(
-        sistol >= 140 ||
-        diastol >= 90
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Tekanan darah tinggi"
-        );
-
-    }
-
-
-    /* ================================
-       HIPERTENSI BERAT
-    ================================= */
-
-    if(
-        sistol >= 160 ||
-        diastol >= 110
-    ){
-
-        skor += 4;
-
-        earlyWarning.push(
-            "🚨 Hipertensi berat. Segera ke Rumah Sakit."
-        );
-
-    }
-
-
-    /* ================================
-       HIPOTENSI
-    ================================= */
-
-    if(
-        sistol < 90 ||
-        diastol < 60
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Tekanan darah rendah"
-        );
-
-        earlyWarning.push(
-            "⚠ Tekanan darah rendah. Bila disertai pusing, lemas atau perdarahan segera ke fasilitas kesehatan."
-        );
-
-    }
-
-
-    /* ================================
-       LILA
-    ================================= */
-
-    if(
-        lila > 0 &&
-        lila < 23.5
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "LILA kurang dari 23,5 cm (risiko KEK)"
-        );
-
-    }
-
-
-    /* ================================
-       IMT
-    ================================= */
-
-    if(imt > 0){
-
-        if(imt < 18.5){
-
-            skor += 2;
-
-            faktorRisiko.push(
-                "IMT kurang (kurus)"
-            );
-
-        }
-
-        else if(
-            imt >= 25 &&
-            imt < 30
-        ){
-
-            skor += 1;
-
-            faktorRisiko.push(
-                "IMT berlebih"
-            );
-
-        }
-
-        else if(imt >= 30){
-
-            skor += 2;
-
-            faktorRisiko.push(
-                "Obesitas"
-            );
-
-        }
-
-    }
-
-
-    /* ================================
-       TANDA BAHAYA
-    ================================= */
-
-    const nyeriKepala =
-        document.getElementById(
-            "nyeriKepala"
-        );
-
-    if(
-        nyeriKepala &&
-        nyeriKepala.checked
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Nyeri kepala hebat"
-        );
-
-        earlyWarning.push(
-            "⚠ Nyeri kepala hebat dapat menjadi tanda preeklamsia."
-        );
-
-    }
-
-
-    const pandanganKabur =
-        document.getElementById(
-            "pandanganKabur"
-        );
-
-    if(
-        pandanganKabur &&
-        pandanganKabur.checked
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Pandangan kabur"
-        );
-
-        earlyWarning.push(
-            "⚠ Pandangan kabur perlu segera diperiksa."
-        );
-
-    }
-
-
-    const kejang =
-        document.getElementById("kejang");
-
-    if(
-        kejang &&
-        kejang.checked
-    ){
-
-        skor += 5;
-
-        faktorRisiko.push(
-            "Kejang"
-        );
-
-        earlyWarning.push(
-            "🚨 Kejang merupakan keadaan gawat darurat."
-        );
-
-    }
-
-
-    const gerakJanin =
-        document.getElementById(
-            "gerakJanin"
-        );
-
-    if(
-        gerakJanin &&
-        gerakJanin.checked
-    ){
-
-        skor += 3;
-
-        faktorRisiko.push(
-            "Gerakan janin berkurang"
-        );
-
-        earlyWarning.push(
-            "🚨 Gerakan janin berkurang. Segera ke fasilitas kesehatan."
-        );
-
-    }
-
-
-    const sesak =
-        document.getElementById("sesak");
-
-    if(
-        sesak &&
-        sesak.checked
-    ){
-
-        skor += 3;
-
-        faktorRisiko.push(
-            "Sesak napas"
-        );
-
-        earlyWarning.push(
-            "🚨 Sesak napas saat hamil memerlukan pemeriksaan segera."
-        );
-
-    }
-
-
-    const demam =
-        document.getElementById("demam");
-
-    if(
-        demam &&
-        demam.checked
-    ){
-
-        skor += 2;
-
-        faktorRisiko.push(
-            "Demam tinggi"
-        );
-
-        earlyWarning.push(
-            "⚠ Demam tinggi saat hamil harus diperiksa."
-        );
-
-    }
-
-}
-
-
-/* =====================================
-   STATUS RISIKO
-===================================== */
-
-function tentukanStatus(){
-
-    if(skor <= 2){
-
-        status =
-            "🟢 Risiko Rendah";
-
-        warna =
-            "#4CAF50";
-
-        rekomendasi = [
-
-            "Lanjutkan ANC sesuai jadwal.",
-
-            "Minum Tablet Tambah Darah setiap hari.",
-
-            "Konsumsi makanan bergizi.",
-
-            "Istirahat yang cukup."
-
-        ];
-
-    }
-
-    else if(skor <= 6){
-
-        status =
-            "🟡 Risiko Sedang";
-
-        warna =
-            "#FFC107";
-
-        rekomendasi = [
-
-            "Periksa ke Puskesmas dalam waktu dekat.",
-
-            "Pantau tekanan darah.",
-
-            "Jangan melewatkan ANC.",
-
-            "Segera datang bila muncul keluhan."
-
-        ];
-
-    }
-
-    else{
-
-        status =
-            "🔴 Risiko Tinggi";
-
-        warna =
-            "#F44336";
-
-        rekomendasi = [
-
-            "Segera ke Bidan atau Rumah Sakit.",
-
-            "Jangan menunda pemeriksaan.",
-
-            "Datang bersama keluarga.",
-
-            "Ikuti semua anjuran tenaga kesehatan."
-
-        ];
-
-    }
-
-}
-
-
-/* =====================================
-   AGAR onclick="ambilData()" BEKERJA
-===================================== */
-
-window.ambilData = ambilData;
-
-window.simpanRiwayat = simpanRiwayat;
+/* =========================================
+   PENTING
+   Agar onclick="ambilData()"
+   pada HTML tetap bekerja.
+========================================= */
+
+window.ambilData =
+    ambilData;
+
+window.simpanRiwayat =
+    simpanRiwayat;
