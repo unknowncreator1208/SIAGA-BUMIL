@@ -58,47 +58,124 @@ window.simpanProfil = async function(){
 
         const profil = {
 
-            nama : document.getElementById("nama").value,
+            // =====================================
+            // IDENTITAS IBU
+            // =====================================
 
-            nik : document.getElementById("nik").value,
+            nama:
+                document.getElementById("nama").value,
 
-            umur : Number(document.getElementById("umur").value),
+            nik:
+                document.getElementById("nik").value,
 
-            tanggalLahir : document.getElementById("tanggalLahir").value,
+            umur:
+                Number(
+                    document.getElementById("umur").value
+                ),
 
-            usiaKehamilan : Number(document.getElementById("usiaKehamilan").value),
+            tanggalLahir:
+                document.getElementById("tanggalLahir").value,
 
-            jumlahKehamilan : Number(document.getElementById("jumlahKehamilan").value),
+            usiaKehamilan:
+                Number(
+                    document.getElementById("usiaKehamilan").value
+                ),
 
-            beratBadan : Number(document.getElementById("beratBadan").value),
+            jumlahKehamilan:
+                Number(
+                    document.getElementById("jumlahKehamilan").value
+                ),
 
-            tinggiBadan : Number(document.getElementById("tinggiBadan").value),
+            beratBadan:
+                Number(
+                    document.getElementById("beratBadan").value
+                ),
 
-            lila : document.getElementById("lila").value,
+            tinggiBadan:
+                Number(
+                    document.getElementById("tinggiBadan").value
+                ),
 
-            golonganDarah : document.getElementById("golonganDarah").value,
+            lila:
+                document.getElementById("lila").value,
 
-            nomorHP : document.getElementById("nomorHP").value,
+            golonganDarah:
+                document.getElementById("golonganDarah").value,
 
-            alamat : document.getElementById("alamat").value,
+            nomorHP:
+                document.getElementById("nomorHP").value,
 
-            hpl : document.getElementById("hpl").value
+            alamat:
+                document.getElementById("alamat").value,
+
+            hpl:
+                document.getElementById("hpl").value,
+
+
+            // =====================================
+            // IDENTITAS SUAMI / PENDAMPING
+            // =====================================
+
+            pendamping: {
+
+                nama:
+                    document.getElementById(
+                        "namaPendamping"
+                    ).value,
+
+                hubungan:
+                    document.getElementById(
+                        "hubunganPendamping"
+                    ).value,
+
+                nomorHP:
+                    document.getElementById(
+                        "nomorHPPendamping"
+                    ).value,
+
+                alamat:
+                    document.getElementById(
+                        "alamatPendamping"
+                    ).value
+
+            }
 
         };
 
+
+        // =====================================
+        // SIMPAN KE FIRESTORE
+        // =====================================
+
         await setDoc(
-    doc(db, "users", currentUser.uid),
-    {
-        nama: profil.nama,
-        email: currentUser.email,
-        role: "ibuHamil",
-        createdAt: new Date().toISOString(),
-        profil: profil
-    },
-    {
-        merge: true
-    }
-);
+
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            ),
+
+            {
+
+                nama: profil.nama,
+
+                email: currentUser.email,
+
+                role: "ibuHamil",
+
+                createdAt:
+                    new Date().toISOString(),
+
+                profil: profil
+
+            },
+
+            {
+                merge: true
+            }
+
+        );
+
 
         alert("Profil berhasil disimpan.");
 
@@ -106,13 +183,19 @@ window.simpanProfil = async function(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Gagal menyimpan profil:",
+            error
+        );
 
-        alert(error.message);
+        alert(
+            "Gagal menyimpan profil: " +
+            error.message
+        );
 
     }
 
-}
+};
 
 // ======================================
 // Load Profil
@@ -176,6 +259,20 @@ async function loadProfil(){
 
             document.getElementById("hpl").value =
             data.profil.hpl || "";
+
+            const pendamping = data.profil.pendamping || {};
+
+document.getElementById("namaPendamping").value =
+pendamping.nama || "";
+
+document.getElementById("hubunganPendamping").value =
+pendamping.hubungan || "";
+
+document.getElementById("nomorHPPendamping").value =
+pendamping.nomorHP || "";
+
+document.getElementById("alamatPendamping").value =
+pendamping.alamat || "";
 
         }
 

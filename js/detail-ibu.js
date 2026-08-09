@@ -88,15 +88,11 @@ async function loadProfil(){
 
         const pendamping = profil.pendamping || {};
 
-        document.getElementById("profil").innerHTML =
+       document.getElementById("profil").innerHTML = `
 
-`
+<h3>👩 Identitas Ibu Hamil</h3>
 
-<h3 class="profil-section-title">
-👩 Identitas Ibu Hamil
-</h3>
-
-<table width="100%">
+<table border="1" width="100%">
 
 <tr>
 <td><b>Nama</b></td>
@@ -104,13 +100,23 @@ async function loadProfil(){
 </tr>
 
 <tr>
+<td><b>NIK</b></td>
+<td>${profil.nik ?? "-"}</td>
+</tr>
+
+<tr>
 <td><b>Umur</b></td>
-<td>${profil.umur ?? "-"}</td>
+<td>${profil.umur ?? "-"} tahun</td>
+</tr>
+
+<tr>
+<td><b>Tanggal Lahir</b></td>
+<td>${profil.tanggalLahir ?? "-"}</td>
 </tr>
 
 <tr>
 <td><b>Usia Kehamilan</b></td>
-<td>${profil.usiaKehamilan ?? "-"} Minggu</td>
+<td>${profil.usiaKehamilan ?? "-"} minggu</td>
 </tr>
 
 <tr>
@@ -119,7 +125,27 @@ async function loadProfil(){
 </tr>
 
 <tr>
-<td><b>No HP</b></td>
+<td><b>Berat Badan</b></td>
+<td>${profil.beratBadan ?? "-"} kg</td>
+</tr>
+
+<tr>
+<td><b>Tinggi Badan</b></td>
+<td>${profil.tinggiBadan ?? "-"} cm</td>
+</tr>
+
+<tr>
+<td><b>LILA</b></td>
+<td>${profil.lila ?? "-"} cm</td>
+</tr>
+
+<tr>
+<td><b>Golongan Darah</b></td>
+<td>${profil.golonganDarah ?? "-"}</td>
+</tr>
+
+<tr>
+<td><b>No. HP</b></td>
 <td>${profil.nomorHP ?? "-"}</td>
 </tr>
 
@@ -128,14 +154,17 @@ async function loadProfil(){
 <td>${profil.alamat ?? "-"}</td>
 </tr>
 
+<tr>
+<td><b>HPL</b></td>
+<td>${profil.hpl ?? "-"}</td>
+</tr>
+
 </table>
 
 
-<h3 class="profil-section-title">
-👨 Identitas Suami / Pendamping
-</h3>
+<h3>👨 Identitas Suami / Pendamping</h3>
 
-<table width="100%">
+<table border="1" width="100%">
 
 <tr>
 <td><b>Nama</b></td>
@@ -148,7 +177,7 @@ async function loadProfil(){
 </tr>
 
 <tr>
-<td><b>No HP</b></td>
+<td><b>No. HP</b></td>
 <td>${pendamping.nomorHP ?? "-"}</td>
 </tr>
 
@@ -160,120 +189,6 @@ async function loadProfil(){
 </table>
 
 `;
-
-        document.getElementById("profil").innerHTML =
-
-        `
-
-        <table border="1" width="100%">
-
-        <tr>
-
-        <td><b>Nama</b></td>
-
-        <td>${profil.nama ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Nik</b></td>
-
-        <td>${profil.nik ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Umur</b></td>
-
-        <td>${profil.umur ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Tanggal Lahir</b></td>
-
-        <td>${profil.tanggalLahir ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Usia Kehamilan</b></td>
-
-        <td>${profil.usiaKehamilan ?? "-"} Minggu</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Jumlah Kehamilan</b></td>
-
-        <td>${profil.jumlahKehamilan ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Berat Badan</b></td>
-
-        <td>${profil.beratBadan ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Tinggi Badan</b></td>
-
-        <td>${profil.tinggiBadan ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Lingkar Lengan Atas (LILA)</b></td>
-
-        <td>${profil.lila ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Golongan Darah</b></td>
-
-        <td>${profil.golonganDarah ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>No HP</b></td>
-
-        <td>${profil.nomorHP ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Alamat</b></td>
-
-        <td>${profil.alamat ?? "-"}</td>
-
-        </tr>
-
-        <tr>
-
-        <td><b>Hari Perkiraan Lahir (HPL)</b></td>
-
-        <td>${profil.hpl ?? "-"}</td>
-
-        </tr>
-
-        </table>
-
-        `;
 
         await loadSkriningTerakhir();
 
