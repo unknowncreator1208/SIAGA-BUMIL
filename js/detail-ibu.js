@@ -26,6 +26,10 @@ import {
 
 from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
+import PersalinanService
+
+from "./services/persalinanService.js";
+
 const TARGET_TABLET = 180;
 
 const params = new URLSearchParams(window.location.search);
@@ -820,3 +824,182 @@ function(){
 window.print();
 
 });
+
+// ======================================
+// SELESAI PERSALINAN
+// ======================================
+
+document
+
+.getElementById(
+
+    "btnSelesaiPersalinan"
+
+)
+
+.addEventListener(
+
+    "click",
+
+    function(){
+
+        const container =
+
+        document.getElementById(
+
+            "formPersalinan"
+
+        );
+
+
+        container.innerHTML = `
+
+            <div class="form-persalinan">
+
+                <h3>
+                    🏥 Data Persalinan
+                </h3>
+
+                <label>
+                    Tanggal Persalinan
+                </label>
+
+                <input
+                    type="date"
+                    id="tanggalPersalinan"
+                >
+
+
+                <label>
+                    Keterangan Persalinan
+                </label>
+
+                <textarea
+                    id="keteranganPersalinan"
+                    placeholder="Contoh: Persalinan normal, bayi lahir sehat"
+                ></textarea>
+
+
+                <button
+                    id="btnKonfirmasiPersalinan"
+                    class="btn-konfirmasi-persalinan">
+
+                    ✓ Konfirmasi Selesai Persalinan
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        document
+
+        .getElementById(
+
+            "btnKonfirmasiPersalinan"
+
+        )
+
+        .addEventListener(
+
+            "click",
+
+            konfirmasiPersalinan
+
+        );
+
+    }
+
+);
+
+async function konfirmasiPersalinan(){
+
+    const tanggal =
+
+    document.getElementById(
+
+        "tanggalPersalinan"
+
+    ).value;
+
+
+    const keterangan =
+
+    document.getElementById(
+
+        "keteranganPersalinan"
+
+    ).value;
+
+
+    if(!tanggal){
+
+        alert(
+
+            "Tanggal persalinan wajib diisi."
+
+        );
+
+        return;
+
+    }
+
+
+    const konfirmasi = confirm(
+
+        "Apakah ibu ini sudah selesai persalinan?"
+
+    );
+
+
+    if(!konfirmasi){
+
+        return;
+
+    }
+
+
+    try{
+
+        await PersalinanService.selesaiPersalinan(
+
+            uid,
+
+            tanggal,
+
+            keterangan
+
+        );
+
+
+        alert(
+
+            "Data persalinan berhasil disimpan."
+
+        );
+
+
+        // Kembali ke dashboard nakes
+
+        window.location.href =
+
+            "dashboard-nakes.html";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+
+            "Gagal menyimpan data persalinan: "
+
+            + error.message
+
+        );
+
+    }
+
+}

@@ -652,3 +652,268 @@ LOGOUT
     background:#f8fafc;
 
 }
+
+/* ===================================
+   SELESAI PERSALINAN
+=================================== */
+
+.btn-selesai-persalinan{
+
+    background:#2E7D32;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    margin-top:20px;
+
+    transition:.3s;
+
+}
+
+.btn-selesai-persalinan:hover{
+
+    background:#1B5E20;
+
+    transform:translateY(-2px);
+
+}
+
+
+.form-persalinan{
+
+    margin-top:20px;
+
+    padding:25px;
+
+    background:#F1F8E9;
+
+    border-radius:15px;
+
+    border-left:6px solid #43A047;
+
+}
+
+
+.form-persalinan h3{
+
+    margin-top:0;
+
+    color:#2E7D32;
+
+}
+
+
+.form-persalinan label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:5px;
+
+    font-weight:bold;
+
+}
+
+
+.form-persalinan input,
+
+.form-persalinan textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    box-sizing:border-box;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-family:Arial,sans-serif;
+
+}
+
+
+.form-persalinan textarea{
+
+    min-height:100px;
+
+    resize:vertical;
+
+}
+
+
+.btn-konfirmasi-persalinan{
+
+    margin-top:20px;
+
+    background:#2E7D32;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+
+.btn-konfirmasi-persalinan:hover{
+
+    background:#1B5E20;
+
+}
+
+/* ===================================
+   RIWAYAT PERSALINAN
+=================================== */
+
+.page-header{
+
+    margin-bottom:25px;
+
+}
+
+.page-header h1{
+
+    margin-bottom:8px;
+
+    color:#1976D2;
+
+}
+
+.page-header p{
+
+    color:#666;
+
+    margin:0;
+
+}
+
+
+/* ==============================
+   TABLE WRAPPER
+============================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+}
+
+
+/* ==============================
+   TABEL PERSALINAN
+============================== */
+
+#tabelPersalinan{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+
+#tabelPersalinan th{
+
+    background:#1976D2;
+
+    color:white;
+
+    padding:15px;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+}
+
+
+#tabelPersalinan td{
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+
+    text-align:center;
+
+}
+
+
+#tabelPersalinan tr:hover{
+
+    background:#f5f9ff;
+
+}
+
+
+/* ==============================
+   BUTTON DETAIL
+============================== */
+
+#tabelPersalinan .detail-btn{
+
+    background:#1976D2;
+
+    color:white;
+
+    border:none;
+
+    padding:9px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    width:auto;
+
+    margin:0;
+
+}
+
+
+#tabelPersalinan .detail-btn:hover{
+
+    background:#0D47A1;
+
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media(max-width:700px){
+
+    #tabelPersalinan{
+
+        min-width:900px;
+
+    }
+
+}
