@@ -2,120 +2,270 @@
 // SIAGA BUMIL
 // skrining-firebase.js
 // ======================================
+
 import {
 
     auth,
-
     db,
-
     doc,
-
     getDoc
 
-}
+} from "./firebase.js";
 
-from "./firebase.js";
 
-import SkriningService from "./services/skriningService.js";
+import SkriningService
+    from "./services/skriningService.js";
+
 
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
+
 let currentUser = null;
+
 
 // ======================================
 // AUTH
 // ======================================
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+    auth,
+    async function(user){
 
-    if (!user) {
+        if(!user){
 
-        window.location.href = "../login.html";
-        return;
+            window.location.href =
+                "../login.html";
+
+            return;
+
+        }
+
+        currentUser = user;
+
+        await loadProfil();
 
     }
+);
 
-    currentUser = user;
 
-    await loadProfil();
-
-});
+// ======================================
+// LOAD PROFIL
+// ======================================
 
 async function loadProfil(){
 
     try{
 
-        const snapshot = await getDoc(
+        if(!currentUser){
 
-            doc(
+            return;
 
-                db,
+        }
 
-                "users",
 
-                currentUser.uid
+        const snapshot =
+            await getDoc(
 
-            )
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
 
+            );
+
+
+        if(!snapshot.exists()){
+
+            console.log(
+                "Data user tidak ditemukan."
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        const profil =
+            data.profil || {};
+
+
+        // ==================================
+        // FUNGSI AMAN
+        // ==================================
+
+        function isiInput(
+            id,
+            value
+        ){
+
+            const element =
+                document.getElementById(id);
+
+
+            if(element){
+
+                element.value =
+                    value ?? "";
+
+            }
+
+        }
+
+
+        // ==================================
+        // IDENTITAS IBU
+        // ==================================
+
+        isiInput(
+            "nama",
+            profil.nama
         );
 
-        if(!snapshot.exists()) return;
 
-        const data = snapshot.data();
+        isiInput(
+            "umur",
+            profil.umur
+        );
 
-        if(!data.profil) return;
 
-        document.getElementById("nama").value =
+        isiInput(
+            "usiaKehamilan",
+            profil.usiaKehamilan
+        );
 
-        data.profil.nama || "";
 
-        document.getElementById("umur").value =
+        // ==================================
+        // DATA KEHAMILAN
+        // ==================================
 
-        data.profil.umur || "";
+        isiInput(
+            "jumlahKehamilan",
+            profil.jumlahKehamilan
+        );
 
-        document.getElementById("usiaKehamilan").value =
 
-        data.profil.usiaKehamilan || "";
+        // ==================================
+        // ANTROPOMETRI
+        // ==================================
 
-        document.getElementById("jumlahKehamilan").value =
+        isiInput(
+            "beratBadan",
+            profil.beratBadan
+        );
 
-        data.profil.jumlahKehamilan || "";
 
-        document.getElementById("beratBadan").value =
+        isiInput(
+            "tinggiBadan",
+            profil.tinggiBadan
+        );
 
-        data.profil.beratBadan || "";
 
-        document.getElementById("tinggiBadan").value =
+        isiInput(
+            "lila",
+            profil.lila
+        );
 
-        data.profil.tinggiBadan || "";
 
-        document.getElementById("lila").value =
+        // ==================================
+        // HITUNG IMT
+        // ==================================
 
-        data.profil.lila || "";
+        const berat =
+            Number(
+                profil.beratBadan
+            );
 
-        document.getElementById("nomorHP").value =
 
-        data.profil.nomorHP || "";
+        const tinggi =
+            Number(
+                profil.tinggiBadan
+            );
 
-        document.getElementById("alamat").value =
 
-        data.profil.alamat || "";
+        let imt = "";
 
-        const pendamping = data.profil.pendamping || {};
 
-document.getElementById("namaPendamping").value =
-pendamping.nama || "";
+        if(
+            berat > 0 &&
+            tinggi > 0
+        ){
 
-document.getElementById("hubunganPendamping").value =
-pendamping.hubungan || "";
+            imt = (
 
-document.getElementById("nomorHPPendamping").value =
-pendamping.nomorHP || "";
+                berat /
+                Math.pow(
+                    tinggi / 100,
+                    2
+                )
 
-document.getElementById("alamatPendamping").value =
-pendamping.alamat || "";
+            ).toFixed(1);
+
+        }
+
+
+        isiInput(
+            "imt",
+            imt
+        );
+
+
+        console.log(
+            "✅ Profil berhasil dimuat ke skrining."
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Gagal memuat profil:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================
+// SIMPAN HASIL SKRINING
+// ======================================
+
+window.simpanHasilSkrining =
+async function(data){
+
+    if(!currentUser){
+
+        alert(
+            "User belum login."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await
+            SkriningService.simpanSkrining(
+
+                currentUser.uid,
+                data
+
+            );
+
+
+        console.log(
+            "✅ Skrining berhasil disimpan"
+        );
 
     }
 
@@ -123,42 +273,10 @@ pendamping.alamat || "";
 
         console.error(error);
 
-    }
-
-}
-
-// ======================================
-// SIMPAN HASIL SKRINING
-// ======================================
-
-window.simpanHasilSkrining = async function (data) {
-
-    if (!currentUser) {
-
-        alert("User belum login.");
-        return;
-
-    }
-
-    try {
-
-        await SkriningService.simpanSkrining(
-
-            currentUser.uid,
-            data
-
+        alert(
+            error.message
         );
 
-        console.log("✅ Skrining berhasil disimpan");
-
     }
 
-    catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
-
-}
+};
