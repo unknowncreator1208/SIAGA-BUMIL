@@ -1,67 +1,75 @@
 // ======================================
-// SIAGA BUMIL
 // User Service
 // ======================================
 
 import {
+
     db,
     collection,
     getDocs,
     query,
     orderBy,
     limit
+
 } from "../firebase.js";
 
 
-class UserService {
+class UserService{
 
     // ======================================
     // SEMUA IBU HAMIL AKTIF
     // ======================================
 
-    static async getSemuaIbu() {
+    static async getSemuaIbu(){
 
         const snapshot = await getDocs(
-            collection(db, "users")
+
+            collection(db,"users")
+
         );
 
         const hasil = [];
 
-        for (const userDoc of snapshot.docs) {
+        for(const userDoc of snapshot.docs){
 
             const data = userDoc.data();
 
-            // ==================================
-            // HANYA AKUN IBU HAMIL
-            // ==================================
+            // Hanya ibu hamil
+            if(
 
-            if (
-                data.role !== "ibu" &&
-                data.role !== "ibuHamil"
-            ) {
+                data.role != "ibu" &&
+
+                data.role != "ibuHamil"
+
+            ){
+
                 continue;
+
             }
 
 
             // ==================================
-            // JIKA SUDAH SELESAI PERSALINAN
-            // JANGAN MASUK KE IBU AKTIF
+            // JANGAN TAMPILKAN YANG SUDAH
+            // SELESAI PERSALINAN
             // ==================================
 
-            if (
-                data.statusAkun ===
+            if(
+
+                data.statusAkun ==
+
                 "selesaiPersalinan"
-            ) {
+
+            ){
+
                 continue;
+
             }
 
-
-            // ==================================
-            // STATUS RISIKO TERAKHIR
-            // ==================================
 
             let statusRisiko = "-";
+
             let skor = "-";
+
             let tanggalSkrining = "-";
 
 
@@ -69,20 +77,28 @@ class UserService {
             // AMBIL SKRINING TERAKHIR
             // ==================================
 
-            try {
+            try{
 
                 const q = query(
 
                     collection(
+
                         db,
+
                         "users",
+
                         userDoc.id,
+
                         "skrining"
+
                     ),
 
                     orderBy(
+
                         "createdAt",
+
                         "desc"
+
                     ),
 
                     limit(1)
@@ -91,33 +107,47 @@ class UserService {
 
 
                 const skrining =
-                    await getDocs(q);
+
+                await getDocs(q);
 
 
-                if (!skrining.empty) {
+                console.log(
+    "UID:",
+    userDoc.id,
+    "Jumlah skrining:",
+    skrining.size
+);
+
+                if(!skrining.empty){
 
                     const terakhir =
-                        skrining.docs[0].data();
+
+                    skrining.docs[0].data();
 
 
                     statusRisiko =
-                        terakhir.status || "-";
+
+                    terakhir.status || "-";
 
 
                     skor =
-                        terakhir.skor ?? "-";
+
+                    terakhir.skor ?? "-";
 
 
-                    if (terakhir.createdAt) {
-
-                        const tanggal =
-                            terakhir.createdAt
-                                .toDate();
+                    if(terakhir.createdAt){
 
                         tanggalSkrining =
-                            tanggal.toLocaleDateString(
-                                "id-ID"
-                            );
+
+                        terakhir.createdAt
+
+                        .toDate()
+
+                        .toLocaleDateString(
+
+                            "id-ID"
+
+                        );
 
                     }
 
@@ -125,18 +155,21 @@ class UserService {
 
             }
 
-            catch (error) {
+            catch(error){
 
-                console.error(
+                console.log(
+
                     "Gagal mengambil skrining:",
+
                     error
+
                 );
 
             }
 
 
             // ==================================
-            // MASUKKAN DATA IBU AKTIF
+            // MASUKKAN DATA
             // ==================================
 
             hasil.push({
@@ -145,17 +178,16 @@ class UserService {
 
                 ...data,
 
-                statusAkun:
-                    data.statusAkun ||
-                    "aktif",
-
                 statusRisikoTerakhir:
+
                     statusRisiko,
 
                 skorTerakhir:
+
                     skor,
 
                 tanggalSkrining:
+
                     tanggalSkrining
 
             });
@@ -172,14 +204,11 @@ class UserService {
     // AMBIL SEMUA RIWAYAT PERSALINAN
     // ======================================
 
-    static async getRiwayatPersalinan() {
+    static async getRiwayatPersalinan(){
 
         const snapshot = await getDocs(
 
-            collection(
-                db,
-                "users"
-            )
+            collection(db,"users")
 
         );
 
@@ -187,20 +216,18 @@ class UserService {
         const hasil = [];
 
 
-        snapshot.forEach(function(userDoc) {
+        snapshot.forEach((userDoc)=>{
 
-            const data =
-                userDoc.data();
+            const data = userDoc.data();
 
 
-            // ==================================
-            // HANYA YANG SELESAI PERSALINAN
-            // ==================================
+            if(
 
-            if (
-                data.statusAkun ===
+                data.statusAkun ==
+
                 "selesaiPersalinan"
-            ) {
+
+            ){
 
                 hasil.push({
 
@@ -215,22 +242,23 @@ class UserService {
         });
 
 
-        // ==================================
-        // URUTKAN DARI TERBARU
-        // ==================================
-
-        hasil.sort(function(a, b) {
+        // Urutkan terbaru
+        hasil.sort(function(a,b){
 
             return (
 
                 new Date(
+
                     b.tanggalSelesaiPersalinan || 0
+
                 )
 
                 -
 
                 new Date(
+
                     a.tanggalSelesaiPersalinan || 0
+
                 )
 
             );

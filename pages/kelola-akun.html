@@ -3,95 +3,202 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Kelola Akun</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link rel="stylesheet" href="../css/style.css">
+    <title>
+        Kelola Akun Petugas - SIAGA BUMIL
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard-nakes.css"
+    >
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h1>👨‍⚕️ Kelola Akun</h1>
+    <h1>
+        👨‍⚕️ Kelola Akun Petugas
+    </h1>
 
-<hr>
+    <hr>
 
-<h3>Tambah Bidan / Kader</h3>
 
-<label>Nama</label>
-<input type="text" id="nama">
+    <!-- ==================================
+         TAMBAH PETUGAS
+    =================================== -->
 
-<label>Email</label>
-<input type="email" id="email">
+    <h2>
+        Tambah Bidan / Kader
+    </h2>
 
-<label>Password</label>
-<input type="password" id="password">
 
-<label>Role</label>
+    <label>
+        Nama
+    </label>
 
-<select id="role">
+    <input
+        type="text"
+        id="nama"
+        placeholder="Nama lengkap petugas"
+    >
 
-<option value="bidan">Bidan</option>
 
-<option value="kader">Kader</option>
+    <label>
+        Email
+    </label>
 
-</select>
+    <input
+        type="email"
+        id="email"
+        placeholder="Email petugas"
+    >
 
-<br><br>
 
-<button onclick="tambahPetugas()">
+    <label>
+        Password
+    </label>
 
-Tambah Akun
+    <input
+        type="password"
+        id="password"
+        placeholder="Minimal 6 karakter"
+    >
 
-</button>
 
-<hr>
+    <label>
+        Role
+    </label>
 
-<h2>Daftar Petugas</h2>
+    <select id="role">
 
-<table
-id="tabelPetugas"
-border="1"
-width="100%">
+        <option value="bidan">
+            Bidan
+        </option>
 
-<thead>
+        <option value="kader">
+            Kader
+        </option>
 
-<tr>
+    </select>
 
-<th>No</th>
 
-<th>Nama</th>
+    <button
+        type="button"
+        onclick="tambahPetugas()"
+    >
 
-<th>Email</th>
+        ➕ Tambah Akun
 
-<th>Role</th>
+    </button>
 
-</tr>
 
-</thead>
+    <hr>
 
-<tbody>
 
-</tbody>
+    <!-- ==================================
+         DAFTAR PETUGAS
+    =================================== -->
 
-</table>
+    <h2>
+        📋 Daftar Petugas
+    </h2>
 
-<br>
 
-<button
-onclick="window.history.back()">
+    <div class="table-wrapper">
 
-Kembali
+        <table
+            id="tabelPetugas"
+            width="100%"
+        >
 
-</button>
+            <thead>
+
+                <tr>
+
+                    <th>
+                        No
+                    </th>
+
+                    <th>
+                        Nama
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Role
+                    </th>
+
+                    <th>
+                        Aksi
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        style="text-align:center;"
+                    >
+
+                        Memuat data...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <br>
+
+
+    <button
+        type="button"
+        onclick="window.history.back()"
+    >
+
+        ⬅ Kembali
+
+    </button>
+
 
 </div>
 
-<script type="module"
-src="../js/kelola-akun.js"></script>
+
+<script
+    type="module"
+    src="../js/kelola-akun.js"
+></script>
+
 
 </body>
 

@@ -163,6 +163,8 @@ window.simpanProfil = async function(){
 
                 role: "ibuHamil",
 
+                statusAkun: "aktif",
+
                 createdAt:
                     new Date().toISOString(),
 

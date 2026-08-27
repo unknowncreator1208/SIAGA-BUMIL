@@ -1,17 +1,11 @@
-import UserService from "./services/userService.js";
-
 // ======================================
-// SIAGA BUMIL
 // RIWAYAT PERSALINAN
 // ======================================
 
 import UserService
-    from "./services/userService.js";
 
+from "./services/UserService.js";
 
-// ======================================
-// DATA GLOBAL
-// ======================================
 
 let semuaData = [];
 
@@ -20,30 +14,33 @@ let semuaData = [];
 // LOAD DATA
 // ======================================
 
-async function loadRiwayat() {
+async function loadRiwayat(){
 
-    try {
+    try{
 
         semuaData =
-            await UserService
-                .getRiwayatPersalinan();
+
+        await UserService
+
+        .getRiwayatPersalinan();
 
 
         tampilkanData(
+
             semuaData
+
         );
 
     }
 
-    catch (error) {
+    catch(error){
 
-        console.error(
-            "Gagal mengambil riwayat:",
-            error
-        );
+        console.error(error);
 
         alert(
+
             "Gagal mengambil data riwayat persalinan."
+
         );
 
     }
@@ -55,45 +52,29 @@ async function loadRiwayat() {
 // TAMPILKAN DATA
 // ======================================
 
-function tampilkanData(data) {
+function tampilkanData(data){
 
     const tbody =
-        document.querySelector(
-            "#tabelPersalinan tbody"
-        );
 
+    document.querySelector(
 
-    if (!tbody) {
+        "#tabelPersalinan tbody"
 
-        console.error(
-            "tbody tabelPersalinan tidak ditemukan."
-        );
-
-        return;
-
-    }
+    );
 
 
     tbody.innerHTML = "";
 
 
-    // ==================================
-    // BELUM ADA DATA
-    // ==================================
-
-    if (data.length === 0) {
+    if(data.length === 0){
 
         tbody.innerHTML = `
 
             <tr>
 
-                <td
-                    colspan="7"
-                    style="text-align:center;"
-                >
+                <td colspan="7">
 
-                    📋 Belum ada
-                    riwayat persalinan.
+                    Belum ada riwayat persalinan.
 
                 </td>
 
@@ -106,120 +87,73 @@ function tampilkanData(data) {
     }
 
 
-    // ==================================
-    // TAMPILKAN DATA
-    // ==================================
+    data.forEach(function(item,index){
 
-    data.forEach(
-        function(item, index) {
+        const profil =
 
-            const profil =
-                item.profil || {};
+            item.profil || {};
 
 
-            const row =
-                tbody.insertRow();
+        const row =
+
+            tbody.insertRow();
 
 
-            // ==========================
-            // NO
-            // ==========================
+        row.insertCell(0).innerHTML =
 
-            row.insertCell(0).innerHTML =
-                index + 1;
+            index + 1;
 
 
-            // ==========================
-            // NAMA
-            // ==========================
+        row.insertCell(1).innerHTML =
 
-            row.insertCell(1).innerHTML =
-                profil.nama || "-";
+            profil.nama || "-";
 
 
-            // ==========================
-            // UMUR
-            // ==========================
+        row.insertCell(2).innerHTML =
 
-            row.insertCell(2).innerHTML =
-                profil.umur
-                    ? profil.umur + " Tahun"
-                    : "-";
+            profil.umur || "-";
 
 
-            // ==========================
-            // USIA KEHAMILAN
-            // ==========================
+        row.insertCell(3).innerHTML =
 
-            row.insertCell(3).innerHTML =
+            profil.usiaKehamilan
 
-                profil.usiaKehamilan
+            ?
 
-                    ?
+            profil.usiaKehamilan + " Minggu"
 
-                    profil.usiaKehamilan
-                    + " Minggu"
+            :
 
-                    :
-
-                    "-";
+            "-";
 
 
-            // ==========================
-            // TANGGAL PERSALINAN
-            // ==========================
+        row.insertCell(4).innerHTML =
 
-            let tanggal =
-                item.tanggalSelesaiPersalinan
-                || "-";
+            item.tanggalSelesaiPersalinan
+
+            || "-";
 
 
-            if (
-                item.tanggalSelesaiPersalinan
-                instanceof Date
-            ) {
+        row.insertCell(5).innerHTML =
 
-                tanggal =
-                    item.tanggalSelesaiPersalinan
-                        .toLocaleDateString(
-                            "id-ID"
-                        );
+            item.keteranganPersalinan
 
-            }
+            || "-";
 
 
-            row.insertCell(4).innerHTML =
-                tanggal;
+        row.insertCell(6).innerHTML = `
 
+            <button
 
-            // ==========================
-            // KETERANGAN
-            // ==========================
+                onclick="lihatDetail('${item.uid}')">
 
-            row.insertCell(5).innerHTML =
-                item.keteranganPersalinan
-                || "-";
+                Detail
 
+            </button>
 
-            // ==========================
-            // AKSI
-            // ==========================
+        `;
 
-            row.insertCell(6).innerHTML = `
-
-                <button
-                    class="detail-btn"
-                    onclick="lihatDetail('${item.uid}')"
-                >
-
-                    Detail
-
-                </button>
-
-            `;
-
-        }
-    );
+    });
 
 }
 
@@ -228,141 +162,73 @@ function tampilkanData(data) {
 // SEARCH
 // ======================================
 
-const search =
-    document.getElementById(
-        "searchPersalinan"
-    );
+document
+
+.getElementById(
+
+    "searchPersalinan"
+
+)
+
+.addEventListener(
+
+    "input",
+
+    function(){
+
+        const keyword =
+
+        this.value
+
+        .toLowerCase();
 
 
-if (search) {
+        const hasil =
 
-    search.addEventListener(
-        "input",
-        function() {
+        semuaData.filter(function(item){
 
-            const keyword =
-                this.value
-                    .toLowerCase()
-                    .trim();
+            const nama =
 
+            (
 
-            const hasil =
-                semuaData.filter(
-                    function(item) {
+                item.profil?.nama
 
-                        const profil =
-                            item.profil || {};
+                || ""
+
+            )
+
+            .toLowerCase();
 
 
-                        const nama =
-                            (
-                                profil.nama
-                                || ""
-                            )
-                            .toLowerCase();
+            return nama.includes(keyword);
+
+        });
 
 
-                        return nama.includes(
-                            keyword
-                        );
+        tampilkanData(hasil);
 
-                    }
-                );
+    }
 
-
-            tampilkanData(
-                hasil
-            );
-
-        }
-    );
-
-}
+);
 
 
 // ======================================
 // DETAIL
 // ======================================
 
-window.lihatDetail =
-    function(uid) {
+window.lihatDetail = function(uid){
 
-        if (!uid) {
+    window.location.href =
 
-            alert(
-                "UID ibu tidak ditemukan."
-            );
+        "detail-ibu.html?uid="
 
-            return;
+        + uid;
 
-        }
-
-
-        window.location.href =
-            "detail-ibu.html?uid="
-            + encodeURIComponent(uid);
-
-    };
+};
 
 
 // ======================================
-// LOGOUT
-// ======================================
-
-const btnLogout =
-    document.getElementById(
-        "btnLogout"
-    );
-
-
-if (btnLogout) {
-
-    btnLogout.addEventListener(
-        "click",
-        async function() {
-
-            try {
-
-                const {
-                    auth
-                } = await import(
-                    "./firebase.js"
-                );
-
-
-                const {
-                    signOut
-                } = await import(
-                    "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
-                );
-
-
-                await signOut(auth);
-
-
-                window.location.href =
-                    "../login.html";
-
-            }
-
-            catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Gagal logout."
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-// ======================================
-// MULAI
+// LOAD
 // ======================================
 
 loadRiwayat();

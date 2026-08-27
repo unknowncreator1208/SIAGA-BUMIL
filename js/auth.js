@@ -128,83 +128,139 @@ window.register = async function(){
 // LOGIN
 // =====================================
 
-window.login = async function(){
+async function login() {
 
-    try{
+    try {
 
         const email =
-        document.getElementById("email").value;
+            document.getElementById("email").value.trim();
 
         const password =
-        document.getElementById("password").value;
+            document.getElementById("password").value;
 
-        // Login ke Firebase Authentication
-        const userCredential = await signInWithEmailAndPassword(
+        // Validasi input
+        if (email === "" || password === "") {
 
-            auth,
-
-            email,
-
-            password
-
-        );
-
-        const user = userCredential.user;
-
-        // Ambil data user dari Firestore
-        const snapshot = await getDoc(
-
-            doc(
-
-                db,
-
-                "users",
-
-                user.uid
-
-            )
-
-        );
-
-        if(!snapshot.exists()){
-
-            alert("Data pengguna tidak ditemukan.");
+            alert("Email dan password harus diisi.");
 
             return;
 
         }
 
+        // =====================================
+        // LOGIN KE FIREBASE AUTHENTICATION
+        // =====================================
+
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        const user = userCredential.user;
+
+        console.log("✅ Authentication berhasil:", user.uid);
+
+
+        // =====================================
+        // AMBIL DATA USER DARI FIRESTORE
+        // =====================================
+
+        const userRef = doc(
+            db,
+            "users",
+            user.uid
+        );
+
+        const snapshot =
+            await getDoc(userRef);
+
+
+        // =====================================
+        // CEK DATA USER
+        // =====================================
+
+        if (!snapshot.exists()) {
+
+            alert(
+                "Login berhasil, tetapi data pengguna tidak ditemukan di Firestore."
+            );
+
+            return;
+
+        }
+
+
         const data = snapshot.data();
 
-        alert("Login berhasil.");
+        console.log("✅ Data user:", data);
 
-        // Arahkan sesuai role 
-        if(
 
-            data.role == "bidan" ||
+        // =====================================
+        // CEK ROLE
+        // =====================================
 
-            data.role == "kader"
+        if (
+            data.role === "bidan" ||
+            data.role === "kader"
+        ) {
 
-        ){
+            alert("Login kader/bidan berhasil.");
 
-            window.location.href = "dashboard/dashboard-nakes.html";
+            window.location.href =
+                "dashboard/dashboard-nakes.html";
 
         }
 
-        else{
+        else if (data.role === "ibu") {
 
-            window.location.href = "dashboard/dashboard.html";
+            alert(
+                "Akun ini adalah akun ibu hamil. Silakan gunakan Login Ibu Hamil."
+            );
+
+        }
+
+        else {
+
+            alert(
+                "Role pengguna tidak dikenali."
+            );
 
         }
 
     }
 
-    catch(error){
+    catch (error) {
 
-        alert("Login gagal");
+        console.error(
+            "❌ Error login:",
+            error
+        );
 
-        alert(error.message);
+        alert(
+            "Login gagal: " +
+            error.message
+        );
 
     }
+
+}
+
+
+// =====================================
+// EVENT BUTTON LOGIN
+// =====================================
+
+const loginButton =
+    document.getElementById("loginButton");
+
+
+if (loginButton) {
+
+    loginButton.addEventListener(
+        "click",
+        login
+    );
 
 }

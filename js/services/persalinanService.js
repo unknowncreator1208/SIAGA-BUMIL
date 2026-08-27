@@ -1,16 +1,17 @@
 // ======================================
-// SIAGA BUMIL
 // Persalinan Service
 // ======================================
 
 import {
+
     db,
     doc,
     updateDoc
+
 } from "../firebase.js";
 
 
-class PersalinanService {
+class PersalinanService{
 
 
     // ======================================
@@ -18,24 +19,32 @@ class PersalinanService {
     // ======================================
 
     static async selesaiPersalinan(
-        uid,
-        tanggalPersalinan,
-        keterangan
-    ) {
 
-        if (!uid) {
+        uid,
+
+        tanggalPersalinan,
+
+        keterangan
+
+    ){
+
+        if(!uid){
 
             throw new Error(
+
                 "UID ibu hamil tidak ditemukan."
+
             );
 
         }
 
 
-        if (!tanggalPersalinan) {
+        if(!tanggalPersalinan){
 
             throw new Error(
+
                 "Tanggal persalinan wajib diisi."
+
             );
 
         }
@@ -44,23 +53,31 @@ class PersalinanService {
         await updateDoc(
 
             doc(
+
                 db,
+
                 "users",
+
                 uid
+
             ),
 
             {
 
                 statusAkun:
+
                     "selesaiPersalinan",
 
                 tanggalSelesaiPersalinan:
+
                     tanggalPersalinan,
 
                 keteranganPersalinan:
+
                     keterangan || "",
 
                 updatedAt:
+
                     new Date().toISOString()
 
             }

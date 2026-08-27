@@ -8,15 +8,14 @@ import {
     db,
     doc,
     getDoc,
+    updateDoc,
     collection,
     getDocs,
     query,
     orderBy,
     limit
 
-}
-
-from "./firebase.js";
+} from "./firebase.js";
 
 import {
 
